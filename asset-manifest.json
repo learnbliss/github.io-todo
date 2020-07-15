@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/github.io-todo/static/css/main.0f339627.chunk.css",
-    "main.js": "/github.io-todo/static/js/main.f433b800.chunk.js",
-    "main.js.map": "/github.io-todo/static/js/main.f433b800.chunk.js.map",
+    "main.js": "/github.io-todo/static/js/main.b0c33463.chunk.js",
+    "main.js.map": "/github.io-todo/static/js/main.b0c33463.chunk.js.map",
     "runtime-main.js": "/github.io-todo/static/js/runtime-main.250060ea.js",
     "runtime-main.js.map": "/github.io-todo/static/js/runtime-main.250060ea.js.map",
     "static/js/2.67a0f075.chunk.js": "/github.io-todo/static/js/2.67a0f075.chunk.js",
     "static/js/2.67a0f075.chunk.js.map": "/github.io-todo/static/js/2.67a0f075.chunk.js.map",
     "index.html": "/github.io-todo/index.html",
-    "precache-manifest.80cb50159d04e9c0e12ff00280529846.js": "/github.io-todo/precache-manifest.80cb50159d04e9c0e12ff00280529846.js",
+    "precache-manifest.8492ab757c079f34327122d2b8598700.js": "/github.io-todo/precache-manifest.8492ab757c079f34327122d2b8598700.js",
     "service-worker.js": "/github.io-todo/service-worker.js",
     "static/css/main.0f339627.chunk.css.map": "/github.io-todo/static/css/main.0f339627.chunk.css.map",
     "static/js/2.67a0f075.chunk.js.LICENSE.txt": "/github.io-todo/static/js/2.67a0f075.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.250060ea.js",
     "static/js/2.67a0f075.chunk.js",
     "static/css/main.0f339627.chunk.css",
-    "static/js/main.f433b800.chunk.js"
+    "static/js/main.b0c33463.chunk.js"
   ]
 }
