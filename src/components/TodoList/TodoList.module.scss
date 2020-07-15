@@ -1,0 +1,20 @@
+.root {
+  min-width: 320px;
+  display: grid;
+  grid-gap: .1rem;
+  background-color: white;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+  padding-bottom: 1rem;
+  border-radius: .3rem;
+
+  > div {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+    padding: 1rem;
+  }
+}
+
+.empty {
+  font-style: italic;
+  color: lightgray;
+  font-weight: bold;
+}
