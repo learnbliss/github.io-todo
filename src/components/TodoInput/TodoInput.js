@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import styles from './TodoInput.module.scss'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {addTodo} from '../../redux/actions';
+import {addTodo, setEditMode} from '../../redux/actions';
 import {idTodoItemSelector} from '../../redux/selectors';
 
-const TodoInput = ({addTodo, task, index}) => {
+const TodoInput = ({addTodo, task, index, setEditMode}) => {
     const [input, setInput] = useState(task?.text || '');
 
     const handleClick = () => {
@@ -22,6 +22,7 @@ const TodoInput = ({addTodo, task, index}) => {
     return (
         <div className={styles.todoInput}>
             <input
+                onBlur={() => setEditMode(null)}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e)}
@@ -41,5 +42,6 @@ TodoInput.propTypes = {
 export default connect((state) => ({
     task: idTodoItemSelector(state),
 }), {
-    addTodo
+    addTodo,
+    setEditMode
 })(TodoInput);
