@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './TodoList.module.scss'
 import PropTypes from 'prop-types';
 import TodoItem from '../TodoItem';
 import TodoInput from '../TodoInput';
 import {connect} from 'react-redux';
-import {todoListLengthSelector, todoListSelector} from '../../redux/selectors';
+import {todoListLengthSelector, todoListToArrSelector} from '../../redux/selectors';
+import {loadTodosFromLocalStorage} from '../../redux/actions';
 
-const TodoList = ({todoList, numTodo}) => {
-    console.log('todoList: ', todoList);
+const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage}) => {
+    const initialState = localStorage.getItem('todoList');
+    useEffect(() => {
+        loadTodosFromLocalStorage(JSON.parse(initialState))
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('todoList', JSON.stringify(todoList))
+    }, [todoList]);
+
     return (
         <div className={styles.root}>
             <div>You have {numTodo} Todos</div>
@@ -15,7 +24,7 @@ const TodoList = ({todoList, numTodo}) => {
                 {numTodo === 0 ?
                     <span className={styles.empty}>Empty, add task</span>
                     : todoList.map((item, index) => (
-                        <TodoItem key={item.id} id={item.id} text={item.text} index={index + 1}/>
+                        <TodoItem key={item.id} id={item.id} text={item.text} index={index}/>
                     ))}
             </div>
             <div>
@@ -34,6 +43,8 @@ TodoList.propTypes = {
 };
 
 export default connect((state) => ({
-    todoList: todoListSelector(state),
+    todoList: todoListToArrSelector(state),
     numTodo: todoListLengthSelector(state),
-}))(TodoList);
+}), {
+    loadTodosFromLocalStorage
+})(TodoList);

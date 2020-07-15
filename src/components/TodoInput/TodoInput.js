@@ -3,12 +3,13 @@ import styles from './TodoInput.module.scss'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {addTodo} from '../../redux/actions';
+import {idTodoItemSelector} from '../../redux/selectors';
 
-const TodoInput = ({addTodo}) => {
-    const [input, setInput] = useState('');
+const TodoInput = ({addTodo, task, index}) => {
+    const [input, setInput] = useState(task?.text || '');
 
     const handleClick = () => {
-        addTodo(input);
+        addTodo(input, task, index);
         setInput('');
     };
 
@@ -26,7 +27,8 @@ const TodoInput = ({addTodo}) => {
                 onKeyDown={(e) => handleKeyDown(e)}
                 className={styles.input}/>
             <button
-                onClick={() => handleClick()}>add
+                onClick={() => handleClick()}>
+                {task ? 'edit' : 'add'}
             </button>
         </div>
     );
@@ -36,4 +38,8 @@ TodoInput.propTypes = {
     addTodo: PropTypes.func.isRequired,
 };
 
-export default connect(null, {addTodo})(TodoInput);
+export default connect((state) => ({
+    task: idTodoItemSelector(state),
+}), {
+    addTodo
+})(TodoInput);

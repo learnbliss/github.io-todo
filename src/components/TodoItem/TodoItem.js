@@ -2,20 +2,28 @@ import React from 'react';
 import styles from './TodoItem.module.scss'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {deleteTodo} from '../../redux/actions';
+import {deleteTodo, setEditMode} from '../../redux/actions';
+import CreateIcon from '@material-ui/icons/Create';
+import CloseIcon from '@material-ui/icons/Close';
+import TodoInput from '../TodoInput';
+import {editModeSelector} from '../../redux/selectors';
 
-const TodoItem = ({id, text, index, deleteTodo}) => {
+const TodoItem = ({id, text, index, deleteTodo, editMode, setEditMode}) => {
     return (
-        <div className={styles.todoItem}>
-            <span>{index}) {text}</span>
-            <div>
-                <button
-                    className={styles.close}
-                    onClick={() => deleteTodo(id)}>
-                    X
-                </button>
-            </div>
-        </div>
+        <>
+            {editMode === id ?
+                <TodoInput index={index}/>
+                : <div className={styles.todoItem}>
+                    <span>{index + 1}) {text}</span>
+                    <div className={styles.edit}>
+                        <CreateIcon
+                            onClick={() => setEditMode(id)}/>
+                        <CloseIcon
+                            onClick={() => deleteTodo(id)}/>
+                    </div>
+                </div>
+            }
+        </>
     );
 };
 
@@ -26,4 +34,9 @@ TodoItem.propTypes = {
     deleteTodo: PropTypes.func.isRequired,
 };
 
-export default connect(null, {deleteTodo})(TodoItem);
+export default connect((state) => ({
+    editMode: editModeSelector(state),
+}), {
+    deleteTodo,
+    setEditMode,
+})(TodoItem);
