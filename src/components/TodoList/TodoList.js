@@ -8,9 +8,10 @@ import {todoListLengthSelector, todoListToArrSelector} from '../../redux/selecto
 import {loadTodosFromLocalStorage} from '../../redux/actions';
 
 const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage}) => {
-    const initialState = localStorage.getItem('todoList');
+    const initialState = JSON.parse(localStorage.getItem('todoList'));
     useEffect(() => {
-        loadTodosFromLocalStorage(JSON.parse(initialState))
+        if (initialState?.length > 0 || null)
+        loadTodosFromLocalStorage(initialState)
     }, []);
 
     useEffect(() => {
