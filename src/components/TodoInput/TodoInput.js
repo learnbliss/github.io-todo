@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {addTodo, setEditMode} from '../../redux/actions';
 import {idTodoItemSelector} from '../../redux/selectors';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import EditIcon from '@material-ui/icons/Edit';
 
 const TodoInput = ({addTodo, task, index, setEditMode}) => {
     const [input, setInput] = useState(task?.text || '');
@@ -37,10 +39,10 @@ const TodoInput = ({addTodo, task, index, setEditMode}) => {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e)}
                 className={styles.input}/>
-            <button
+            <span
                 onClick={() => handleClick()}>
-                {task ? 'edit' : 'add'}
-            </button>
+                {task ? <EditIcon/> : <PostAddIcon/>}
+            </span>
         </div>
     );
 };
