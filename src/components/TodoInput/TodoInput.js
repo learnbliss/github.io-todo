@@ -16,13 +16,23 @@ const TodoInput = ({addTodo, task, index, setEditMode}) => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleClick()
+        } else if (e.key === 'Escape') {
+            setEditMode(null)
         }
+    };
+
+    const handleBlur = () => {
+        if (task) {
+            return handleClick()
+        }
+        setEditMode(null)
     };
 
     return (
         <div className={styles.todoInput}>
             <input
-                onBlur={() => setEditMode(null)}
+                onBlur={() => handleBlur()}
+                autoFocus={!!task}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e)}
