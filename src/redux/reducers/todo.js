@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
         case LOAD_TODOS_FROM_LOCALSTORAGE: {
             return {
                 ...state,
-                todoList: payload.todoList,
+                todoList: payload.localStorageData,
             }
         }
         case SET_CHECKED:

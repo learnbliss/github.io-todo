@@ -4,19 +4,17 @@ import PropTypes from 'prop-types';
 import TodoItem from '../TodoItem';
 import TodoInput from '../TodoInput';
 import {connect} from 'react-redux';
-import {todoListLengthSelector, todoListToArrSelector} from '../../redux/selectors';
-import {loadTodosFromLocalStorage} from '../../redux/actions';
+import {todoListLengthSelector, todoListSelector} from '../../redux/selectors';
+import {addTodosInLocalStorage, loadTodosFromLocalStorage} from '../../redux/actions';
 
-const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage}) => {
-    const initialState = JSON.parse(localStorage.getItem('todoList'));
+const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage, addTodosInLocalStorage}) => {
     useEffect(() => {
-        if (initialState?.length > 0 || null)
-        loadTodosFromLocalStorage(initialState)
+        loadTodosFromLocalStorage()
     }, []); //eslint-disable-line
 
     useEffect(() => {
-        localStorage.setItem('todoList', JSON.stringify(todoList))
-    }, [todoList]);
+        addTodosInLocalStorage(todoList);
+    }, [addTodosInLocalStorage, todoList]);
 
     return (
         <div className={styles.root}>
@@ -50,8 +48,9 @@ TodoList.propTypes = {
 };
 
 export default connect((state) => ({
-    todoList: todoListToArrSelector(state),
+    todoList: todoListSelector(state),
     numTodo: todoListLengthSelector(state),
 }), {
-    loadTodosFromLocalStorage
+    loadTodosFromLocalStorage,
+    addTodosInLocalStorage
 })(TodoList);
