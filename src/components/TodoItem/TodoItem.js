@@ -11,7 +11,6 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked}) => {
-    console.log('checked: ', checked);
     return (
         <>
             {editMode === id && !checked ?
