@@ -8,10 +8,10 @@ export const deleteTodo = (id) => ({
     }
 });
 
-export const addTodo = (text, task, index) => {
+export const addTodo = (text, task) => {
     return (dispatch) => {
         if (task) {
-            return dispatch({type: EDIT_TODO, payload: {text, task, index}})
+            return dispatch({type: EDIT_TODO, payload: {text, task}})
         }
         const uuid = uuidv4();
         dispatch({type: ADD_TODO, payload: {id: uuid, text: text}})

@@ -7,11 +7,14 @@ import {idTodoItemSelector} from '../../redux/selectors';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import EditIcon from '@material-ui/icons/Edit';
 
-const TodoInput = ({addTodo, task, index, setEditMode}) => {
+const TodoInput = ({addTodo, task, setEditMode, edit}) => {
     const [input, setInput] = useState(task?.text || '');
 
     const handleClick = () => {
-        addTodo(input, task, index);
+        if (input.length === 0) {
+            return
+        }
+        addTodo(input, task);
         setInput('');
     };
 
@@ -41,7 +44,7 @@ const TodoInput = ({addTodo, task, index, setEditMode}) => {
                 className={styles.input}/>
             <span
                 onClick={() => handleClick()}>
-                {task ? <EditIcon/> : <PostAddIcon/>}
+                {edit ? <EditIcon/> : <PostAddIcon/>}
             </span>
         </div>
     );

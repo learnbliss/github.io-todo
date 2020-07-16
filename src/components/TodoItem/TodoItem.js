@@ -12,7 +12,7 @@ const TodoItem = ({id, text, index, deleteTodo, editMode, setEditMode}) => {
     return (
         <>
             {editMode === id ?
-                <TodoInput index={index}/>
+                <TodoInput edit={true}/>
                 : <div className={styles.todoItem}>
                     <span className={styles.todoText}
                         onDoubleClick={() => setEditMode(id)}
