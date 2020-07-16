@@ -14,7 +14,9 @@ const TodoItem = ({id, text, index, deleteTodo, editMode, setEditMode}) => {
             {editMode === id ?
                 <TodoInput index={index}/>
                 : <div className={styles.todoItem}>
-                    <span>{index + 1}) {text}</span>
+                    <span className={styles.todoText}
+                        onDoubleClick={() => setEditMode(id)}
+                    >{index + 1}) {text}</span>
                     <div className={styles.edit}>
                         <CreateIcon
                             onClick={() => setEditMode(id)}/>

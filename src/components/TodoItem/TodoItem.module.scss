@@ -6,6 +6,11 @@
   box-shadow: 0 5px 7px -5px rgba(0,0,0,0.75);
 }
 
+.todoText {
+  cursor: pointer;
+}
+
 .edit > svg {
   padding: 0 .3rem;
+  cursor: pointer;
 }
