@@ -52,6 +52,12 @@ const TodoInput = ({addTodo, task, setEditMode, edit}) => {
 
 TodoInput.propTypes = {
     addTodo: PropTypes.func.isRequired,
+    task: PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string,
+    }),
+    setEditMode: PropTypes.func,
+    edit: PropTypes.bool,
 };
 
 export default connect((state) => ({

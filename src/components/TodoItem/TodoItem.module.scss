@@ -4,14 +4,23 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   grid-gap: .5rem;
-  box-shadow: 0 5px 7px -5px rgba(0,0,0,0.75);
+  box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.75);
 }
 
 .todoText {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  svg {
+    padding-right: .3rem;
+  }
 }
 
 .edit > svg {
   padding: 0 .3rem;
   cursor: pointer;
+}
+
+.checked {
+  text-decoration: line-through solid red;
 }

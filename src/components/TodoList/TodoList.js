@@ -12,7 +12,7 @@ const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage}) => {
     useEffect(() => {
         if (initialState?.length > 0 || null)
         loadTodosFromLocalStorage(initialState)
-    }, []);
+    }, []); //eslint-disable-line
 
     useEffect(() => {
         localStorage.setItem('todoList', JSON.stringify(todoList))
@@ -25,7 +25,12 @@ const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage}) => {
                 {numTodo === 0 ?
                     <span className={styles.empty}>Empty, add task</span>
                     : todoList.map((item, index) => (
-                        <TodoItem key={item.id} id={item.id} text={item.text} index={index}/>
+                        <TodoItem
+                            key={item.id}
+                            id={item.id}
+                            text={item.text}
+                            checked={item.checked}
+                            index={index}/>
                     ))}
             </div>
             <div>
@@ -41,6 +46,7 @@ TodoList.propTypes = {
         text: PropTypes.string,
     }).isRequired).isRequired,
     numTodo: PropTypes.number,
+    loadTodosFromLocalStorage: PropTypes.func,
 };
 
 export default connect((state) => ({

@@ -1,4 +1,4 @@
-import {ADD_TODO, DELETE_TODO, EDIT_MODE, EDIT_TODO, LOAD_TODOS_FROM_LOCALSTORAGE} from '../constants';
+import {ADD_TODO, DELETE_TODO, EDIT_MODE, EDIT_TODO, LOAD_TODOS_FROM_LOCALSTORAGE, SET_CHECKED} from '../constants';
 
 const initialState = {
     todoList: [],
@@ -40,6 +40,16 @@ export default (state = initialState, action) => {
                 todoList: payload.todoList,
             }
         }
+        case SET_CHECKED:
+            return {
+                ...state,
+                todoList: state.todoList.map(item => {
+                    if (item.id === payload.id) {
+                        return {...item, checked: !item.checked}
+                    }
+                    return item
+                })
+            };
         default:
             return state
     }
