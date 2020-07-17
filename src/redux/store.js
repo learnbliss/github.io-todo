@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import todo from './reducers/todo';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import reducers from './reducers';
 
-export default configureStore({
-  reducer: {
-    counter: counterReducer,
-    todo,
-  },
-});
+const enhancer = applyMiddleware(
+  thunk,
+);
+
+export default createStore(reducers, composeWithDevTools(enhancer));

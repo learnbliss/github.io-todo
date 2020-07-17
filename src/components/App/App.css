@@ -5,3 +5,9 @@
   justify-content: center;
   align-items: center;
 }
+
+@media all and (max-width: 768px) {
+  .App {
+    justify-content: start;
+  }
+}
