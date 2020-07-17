@@ -1,6 +1,6 @@
 .root {
   min-width: 320px;
-  max-width: 500px;
+  max-width: 768px;
   display: grid;
   grid-gap: .1rem;
   background-color: white;
@@ -23,6 +23,7 @@
   .root {
     grid-template-rows: auto 1fr auto;
     height: 100%;
+    width: 100%;
     border-radius: unset;
   }
 }
