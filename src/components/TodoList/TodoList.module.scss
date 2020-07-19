@@ -31,14 +31,14 @@
   grid-gap: 1rem;
   align-items: center;
   justify-content: center;
-  transform: translateY(110%);
+  transform: translateY(100%) scaleY(0);
   opacity: 0;
   transition: transform .3s, opacity .3s ease-in-out;
   padding: 1rem 0;
 }
 
 .revert.view {
-  transform: translateY(0);
+  transform: translateY(0) scaleY(1);
   opacity: 1;
 }
 

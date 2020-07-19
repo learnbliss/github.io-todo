@@ -8,6 +8,7 @@ import {
     SET_CHECKED, REVERT_DELETED
 } from './constants';
 import {v4 as uuidv4} from 'uuid';
+import {lastDeletedSelector} from './selectors';
 
 // export const deleteTodo = (id) => ({
 //     type: DELETE_TODO,
@@ -67,6 +68,16 @@ export const confirmDelete = (id) => ({
     payload: {id}
 });
 
-export const revertDeleted = () => ({
-    type: REVERT_DELETED
-});
+export const revertDeleted = () => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        try {
+            const lastDeleted = await lastDeletedSelector(state);
+            if (lastDeleted) {
+                dispatch({type: REVERT_DELETED})
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    };
+};

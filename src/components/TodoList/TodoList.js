@@ -22,7 +22,7 @@ const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage, addTodosInLocal
         <div className={styles.root}>
             <div>You have {numTodo} Todos</div>
             <div>
-                {numTodo === 0 ?
+                {numTodo === 0 || !todoList ?
                     <span className={styles.empty}>Empty, add task</span>
                     : todoList.map((item, index) => (
                         <TodoItem

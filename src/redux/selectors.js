@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 
-export const todoListSelector = (state) => state.todo.todoList;
+export const todoListSelector = (state) => state.todo.todoList || [];
 export const todoListLengthSelector = (state) => state.todo.todoList.length;
 export const editModeSelector = (state) => state.todo.editMode;
 
