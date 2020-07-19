@@ -52,6 +52,8 @@ TodoItem.propTypes = {
     editMode: PropTypes.string,
     setEditMode: PropTypes.func,
     setChecked: PropTypes.func,
+    confirmId: PropTypes.string,
+    confirmDelete: PropTypes.func,
 };
 
 export default connect((state) => ({

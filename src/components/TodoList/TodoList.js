@@ -37,7 +37,7 @@ const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage, addTodosInLocal
                 <TodoInput/>
             </div>
             <span onClick={() => revertDeleted()}
-                className={cn(styles.revert, {[styles.view]: lastDeleted })}>
+                  className={cn(styles.revert, {[styles.view]: lastDeleted})}>
                 revert back <HistoryIcon/>
             </span>
         </div>
@@ -51,6 +51,8 @@ TodoList.propTypes = {
     }).isRequired).isRequired,
     numTodo: PropTypes.number,
     loadTodosFromLocalStorage: PropTypes.func,
+    lastDeleted: PropTypes.object,
+    revertDeleted: PropTypes.func.isRequired,
 };
 
 export default connect((state) => ({
