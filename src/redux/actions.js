@@ -1,12 +1,33 @@
-import {ADD_TODO, DELETE_TODO, EDIT_MODE, EDIT_TODO, LOAD_TODOS_FROM_LOCALSTORAGE, SET_CHECKED} from './constants';
+import {
+    ADD_TODO,
+    CONFIRM_DELETE,
+    DELETE_TODO,
+    EDIT_MODE,
+    EDIT_TODO, CLEAR_LAST_DELETED,
+    LOAD_TODOS_FROM_LOCALSTORAGE,
+    SET_CHECKED, REVERT_DELETED
+} from './constants';
 import {v4 as uuidv4} from 'uuid';
 
-export const deleteTodo = (id) => ({
-    type: DELETE_TODO,
-    payload: {
-        id
-    }
-});
+// export const deleteTodo = (id) => ({
+//     type: DELETE_TODO,
+//     payload: {
+//         id
+//     }
+// });
+export const deleteTodo = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: DELETE_TODO, payload: {id}});
+            setTimeout(() => {
+                dispatch({type: CLEAR_LAST_DELETED})
+            }, 3000)
+        } catch (err) {
+            console.error(err);
+        }
+    };
+};
+
 
 export const addTodo = (text, task) => {
     return (dispatch) => {
@@ -36,8 +57,16 @@ export const addTodosInLocalStorage = (todoList) => {
     };
 };
 
-
 export const setChecked = (id) => ({
     type: SET_CHECKED,
     payload: {id}
+});
+
+export const confirmDelete = (id) => ({
+    type: CONFIRM_DELETE,
+    payload: {id}
+});
+
+export const revertDeleted = () => ({
+    type: REVERT_DELETED
 });

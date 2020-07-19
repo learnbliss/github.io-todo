@@ -11,3 +11,6 @@ export const idTodoItemSelector = createSelector(
         return todoList?.find(item => item.id === id)
     }
 );
+
+export const confirmDeleteModSelector = (state) => state.todo.confirmDeleteId;
+export const lastDeletedSelector = (state) => state.todo.lastDeleted;

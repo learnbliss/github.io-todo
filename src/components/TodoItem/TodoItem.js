@@ -2,15 +2,16 @@ import React from 'react';
 import styles from './TodoItem.module.scss'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {deleteTodo, setChecked, setEditMode} from '../../redux/actions';
+import {confirmDelete, deleteTodo, setChecked, setEditMode} from '../../redux/actions';
 import CreateIcon from '@material-ui/icons/Create';
 import CloseIcon from '@material-ui/icons/Close';
 import TodoInput from '../TodoInput';
-import {editModeSelector} from '../../redux/selectors';
+import {confirmDeleteModSelector, editModeSelector} from '../../redux/selectors';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import Button from '@material-ui/core/Button';
 
-const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked}) => {
+const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked, confirmId, confirmDelete}) => {
     return (
         <>
             {editMode === id && !checked ?
@@ -27,7 +28,15 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                         <CreateIcon
                             onClick={() => setEditMode(id)}/>
                         <CloseIcon
-                            onClick={() => deleteTodo(id)}/>
+                            onClick={() => confirmDelete(id)}/>
+                        {confirmId === id &&
+                        <div className={styles.confirmButton} onClick={() => confirmDelete(null)}>
+                            <span>Want to delete this task?</span>
+                            <Button onClick={() => deleteTodo(id)}
+                                    variant="contained">Yes</Button>
+                            <Button onClick={() => confirmDelete(null)}
+                                    variant="contained">No</Button>
+                        </div>}
                     </div>
                 </div>
             }
@@ -47,8 +56,10 @@ TodoItem.propTypes = {
 
 export default connect((state) => ({
     editMode: editModeSelector(state),
+    confirmId: confirmDeleteModSelector(state),
 }), {
     deleteTodo,
     setEditMode,
     setChecked,
+    confirmDelete,
 })(TodoItem);

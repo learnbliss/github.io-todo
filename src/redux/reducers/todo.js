@@ -1,8 +1,18 @@
-import {ADD_TODO, DELETE_TODO, EDIT_MODE, EDIT_TODO, LOAD_TODOS_FROM_LOCALSTORAGE, SET_CHECKED} from '../constants';
+import {
+    ADD_TODO, CLEAR_LAST_DELETED,
+    CONFIRM_DELETE,
+    DELETE_TODO,
+    EDIT_MODE,
+    EDIT_TODO,
+    LOAD_TODOS_FROM_LOCALSTORAGE, REVERT_DELETED,
+    SET_CHECKED
+} from '../constants';
 
 const initialState = {
     todoList: [],
     editMode: null,
+    confirmDeleteId: null,
+    lastDeleted: null,
 };
 
 export default (state = initialState, action) => {
@@ -16,7 +26,14 @@ export default (state = initialState, action) => {
         case DELETE_TODO:
             return {
                 ...state,
-                todoList: state.todoList.filter(item => (item.id !== payload.id))
+                todoList: state.todoList.filter(item => (item.id !== payload.id)),
+                lastDeleted: state.todoList.find(item => {
+                    if (item.id === payload.id) {
+                        return item
+                    }
+                    return null
+                }),
+                confirmDeleteId: null
             };
         case EDIT_MODE:
             return {
@@ -49,6 +66,22 @@ export default (state = initialState, action) => {
                     }
                     return item
                 })
+            };
+        case CONFIRM_DELETE:
+            return {
+                ...state,
+                confirmDeleteId: payload.id
+            };
+        case CLEAR_LAST_DELETED:
+            return {
+                ...state,
+                lastDeleted: null
+            };
+        case REVERT_DELETED:
+            return {
+                ...state,
+                todoList: [...state.todoList, state.lastDeleted],
+                lastDeleted: null
             };
         default:
             return state

@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import TodoItem from '../TodoItem';
 import TodoInput from '../TodoInput';
 import {connect} from 'react-redux';
-import {todoListLengthSelector, todoListSelector} from '../../redux/selectors';
-import {addTodosInLocalStorage, loadTodosFromLocalStorage} from '../../redux/actions';
+import {lastDeletedSelector, todoListLengthSelector, todoListSelector} from '../../redux/selectors';
+import {addTodosInLocalStorage, loadTodosFromLocalStorage, revertDeleted} from '../../redux/actions';
+import HistoryIcon from '@material-ui/icons/History';
+import cn from 'classnames';
 
-const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage, addTodosInLocalStorage}) => {
+const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted}) => {
     useEffect(() => {
         loadTodosFromLocalStorage()
     }, []); //eslint-disable-line
@@ -34,6 +36,10 @@ const TodoList = ({todoList, numTodo, loadTodosFromLocalStorage, addTodosInLocal
             <div>
                 <TodoInput/>
             </div>
+            <span onClick={() => revertDeleted()}
+                className={cn(styles.revert, {[styles.view]: lastDeleted })}>
+                revert back <HistoryIcon/>
+            </span>
         </div>
     );
 };
@@ -50,7 +56,9 @@ TodoList.propTypes = {
 export default connect((state) => ({
     todoList: todoListSelector(state),
     numTodo: todoListLengthSelector(state),
+    lastDeleted: lastDeletedSelector(state),
 }), {
     loadTodosFromLocalStorage,
-    addTodosInLocalStorage
+    addTodosInLocalStorage,
+    revertDeleted,
 })(TodoList);

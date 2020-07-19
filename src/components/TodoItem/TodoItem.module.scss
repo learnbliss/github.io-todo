@@ -11,16 +11,36 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+
   svg {
     padding-right: .3rem;
   }
 }
 
 .edit > svg {
-  padding: 0 .3rem;
+  padding-left: .3rem;
   cursor: pointer;
 }
 
 .checked {
   text-decoration: line-through solid red;
+}
+
+.confirmButton {
+  position: fixed;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: auto auto;
+  grid-gap: 2rem;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(1, 1, 1, .9);
+  color: white;
+
+  span {
+    grid-column: 1/3;
+  }
 }
