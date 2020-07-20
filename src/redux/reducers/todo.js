@@ -1,11 +1,11 @@
 import {
-    ADD_TODO, CLEAR_LAST_DELETED,
+    ADD_TODO, CLEAR_ALL, CLEAR_LAST_DELETED, CONFIRM,
     CONFIRM_DELETE,
     DELETE_TODO,
     EDIT_MODE,
     EDIT_TODO,
     LOAD_TODOS_FROM_LOCALSTORAGE, REVERT_DELETED,
-    SET_CHECKED
+    SET_CHECKED, SUCCESS
 } from '../constants';
 
 const initialState = {
@@ -13,6 +13,7 @@ const initialState = {
     editMode: null,
     confirmDeleteId: null,
     lastDeleted: null,
+    confirmClearAll: false,
 };
 
 export default (state = initialState, action) => {
@@ -82,6 +83,18 @@ export default (state = initialState, action) => {
                 ...state,
                 todoList: [...state.todoList, state.lastDeleted],
                 lastDeleted: null
+            };
+        case CLEAR_ALL + CONFIRM:
+            return {
+                ...state,
+                confirmClearAll: !state.confirmClearAll
+            };
+            case CLEAR_ALL + SUCCESS:
+            return {
+                ...state,
+                todoList: [],
+                lastDeleted: null,
+                confirmClearAll: false
             };
         default:
             return state

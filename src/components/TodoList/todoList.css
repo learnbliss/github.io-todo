@@ -1,0 +1,18 @@
+.todo-item-animation-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+.todo-item-animation-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 300ms, opacity 300ms ease-in;
+}
+.todo-item-animation-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+.todo-item-animation-exit-active {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 300ms, opacity 300ms ease-in;
+}

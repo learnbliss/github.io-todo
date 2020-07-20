@@ -7,3 +7,6 @@ export const SET_CHECKED = 'SET_CHECKED';
 export const CONFIRM_DELETE = 'CONFIRM_DELETE';
 export const CLEAR_LAST_DELETED = 'CLEAR_LAST_DELETED';
 export const REVERT_DELETED = 'REVERT_DELETED';
+export const CLEAR_ALL = 'CLEAR_ALL';
+export const CONFIRM = '_CONFIRM';
+export const SUCCESS = '_SUCCESS';

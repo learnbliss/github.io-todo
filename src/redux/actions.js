@@ -5,30 +5,28 @@ import {
     EDIT_MODE,
     EDIT_TODO, CLEAR_LAST_DELETED,
     LOAD_TODOS_FROM_LOCALSTORAGE,
-    SET_CHECKED, REVERT_DELETED
+    SET_CHECKED, REVERT_DELETED, CLEAR_ALL, CONFIRM, SUCCESS
 } from './constants';
 import {v4 as uuidv4} from 'uuid';
 import {lastDeletedSelector} from './selectors';
 
-// export const deleteTodo = (id) => ({
-//     type: DELETE_TODO,
-//     payload: {
-//         id
-//     }
-// });
+export const confirmDelete = (id) => ({
+    type: CONFIRM_DELETE,
+    payload: {id}
+});
+
 export const deleteTodo = (id) => {
     return async (dispatch) => {
         try {
             dispatch({type: DELETE_TODO, payload: {id}});
-            setTimeout(() => {
+            setTimeout(() => (
                 dispatch({type: CLEAR_LAST_DELETED})
-            }, 3000)
+            ), 3000)
         } catch (err) {
             console.error(err);
         }
     };
 };
-
 
 export const addTodo = (text, task) => {
     return (dispatch) => {
@@ -63,21 +61,26 @@ export const setChecked = (id) => ({
     payload: {id}
 });
 
-export const confirmDelete = (id) => ({
-    type: CONFIRM_DELETE,
-    payload: {id}
-});
-
 export const revertDeleted = () => {
-    return async (dispatch, getState) => {
+    return (dispatch, getState) => {
         const state = getState();
+        const lastDeleted = lastDeletedSelector(state);
+        if (lastDeleted) {
+            dispatch({type: REVERT_DELETED})
+        }
+    };
+};
+
+export const clearAll = (value) => {
+    return async (dispatch) => {
         try {
-            const lastDeleted = await lastDeletedSelector(state);
-            if (lastDeleted) {
-                dispatch({type: REVERT_DELETED})
+            if (value !== 'confirm') {
+                dispatch({type: CLEAR_ALL + CONFIRM})
+            } else {
+                dispatch({type: CLEAR_ALL + SUCCESS})
             }
-        } catch (e) {
-            console.error(e)
+        } catch (err) {
+            console.error(err);
         }
     };
 };

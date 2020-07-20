@@ -14,3 +14,4 @@ export const idTodoItemSelector = createSelector(
 
 export const confirmDeleteModSelector = (state) => state.todo.confirmDeleteId;
 export const lastDeletedSelector = (state) => state.todo.lastDeleted;
+export const confirmClearAllSelector = (state) => state.todo.confirmClearAll;

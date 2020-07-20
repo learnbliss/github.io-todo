@@ -9,7 +9,8 @@ import TodoInput from '../TodoInput';
 import {confirmDeleteModSelector, editModeSelector} from '../../redux/selectors';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import Button from '@material-ui/core/Button';
+import cn from 'classnames'
+import ConfirmAction from '../ConfirmAction';
 
 const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked, confirmId, confirmDelete}) => {
     return (
@@ -22,7 +23,7 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                         {checked ?
                             <CheckCircleOutlineIcon onClick={() => setChecked(id)}/>
                             : <RadioButtonUncheckedIcon onClick={() => setChecked(id)}/>}
-                        <span className={checked ? styles.checked : ''}>{index + 1}) {text}</span>
+                        <span className={cn({[styles.checked]: checked})}>{index + 1}) {text}</span>
                     </span>
                     <div className={styles.edit}>
                         <CreateIcon
@@ -30,13 +31,20 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                         <CloseIcon
                             onClick={() => confirmDelete(id)}/>
                         {confirmId === id &&
-                        <div className={styles.confirmButton} onClick={() => confirmDelete(null)}>
-                            <span>Want to delete this task?</span>
-                            <Button onClick={() => deleteTodo(id)}
-                                    variant="contained">Yes</Button>
-                            <Button onClick={() => confirmDelete(null)}
-                                    variant="contained">No</Button>
-                        </div>}
+                        // <div className={styles.confirmButton} onClick={() => confirmDelete(null)}>
+                        //     <span>Want to delete this task?</span>
+                        //     <Button onClick={() => deleteTodo(id)}
+                        //             variant="contained">Yes</Button>
+                        //     <Button onClick={() => confirmDelete(null)}
+                        //             variant="contained">No</Button>
+                        // </div>
+                        <ConfirmAction
+                            positiveFn={deleteTodo}
+                            negativeFn={confirmDelete}
+                            positive={id}
+                            negative={null}
+                            head={'Want to delete this task?'}/>
+                        }
                     </div>
                 </div>
             }
