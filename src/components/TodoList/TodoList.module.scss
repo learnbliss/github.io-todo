@@ -5,7 +5,8 @@
   display: grid;
   grid-gap: .1rem;
   background-color: white;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+  //box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+  overflow: auto;
   border-radius: .3rem;
 
   > div {
