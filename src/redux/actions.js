@@ -15,16 +15,13 @@ export const confirmDelete = (id) => ({
     payload: {id}
 });
 
+let timer;
 export const deleteTodo = (id) => {
-    return async (dispatch) => {
-        try {
-            dispatch({type: DELETE_TODO, payload: {id}});
-            setTimeout(() => (
-                dispatch({type: CLEAR_LAST_DELETED})
-            ), 3000)
-        } catch (err) {
-            console.error(err);
-        }
+    return (dispatch) => {
+        const handler = () => (dispatch({type: CLEAR_LAST_DELETED}));
+        dispatch({type: DELETE_TODO, payload: {id}});
+        clearTimeout(timer);
+        timer = setTimeout(handler, 3000)
     };
 };
 

@@ -24,7 +24,7 @@ const ConfirmAction = ({positiveFn, negativeFn = positiveFn, positive = true, ne
 ConfirmAction.propTypes = {
     positiveFn: PropTypes.func.isRequired,
     negativeFn: PropTypes.func,
-    positive: PropTypes.bool,
+    positive: PropTypes.string || PropTypes.bool,
     negative: PropTypes.bool,
     head: PropTypes.string,
 };

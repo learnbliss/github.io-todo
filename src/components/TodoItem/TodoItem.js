@@ -13,13 +13,16 @@ import cn from 'classnames'
 import ConfirmAction from '../ConfirmAction';
 
 const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked, confirmId, confirmDelete}) => {
+    const setEditNoChecked = (id) => {
+        if (!checked) setEditMode(id)
+    };
     return (
         <>
-            {editMode === id && !checked ?
+            {editMode === id?
                 <TodoInput edit={true}/>
                 : <div className={styles.todoItem}>
                     <span className={styles.todoText}
-                          onDoubleClick={() => setEditMode(id)}>
+                          onDoubleClick={() => setEditNoChecked(id)}>
                         {checked ?
                             <CheckCircleOutlineIcon onClick={() => setChecked(id)}/>
                             : <RadioButtonUncheckedIcon onClick={() => setChecked(id)}/>}
@@ -27,7 +30,7 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                     </span>
                     <div className={styles.edit}>
                         <CreateIcon
-                            onClick={() => setEditMode(id)}/>
+                            onClick={() => setEditNoChecked(id)}/>
                         <CloseIcon
                             onClick={() => confirmDelete(id)}/>
                         {confirmId === id &&
