@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/github.io-todo/static/css/main.76b53fdc.chunk.css",
+    "main.css": "/github.io-todo/static/css/main.26d74221.chunk.css",
     "main.js": "/github.io-todo/static/js/main.a866e350.chunk.js",
     "main.js.map": "/github.io-todo/static/js/main.a866e350.chunk.js.map",
     "runtime-main.js": "/github.io-todo/static/js/runtime-main.250060ea.js",
@@ -8,15 +8,15 @@
     "static/js/2.c2ce1649.chunk.js": "/github.io-todo/static/js/2.c2ce1649.chunk.js",
     "static/js/2.c2ce1649.chunk.js.map": "/github.io-todo/static/js/2.c2ce1649.chunk.js.map",
     "index.html": "/github.io-todo/index.html",
-    "precache-manifest.7e13c9ddee2e7c943b8aa71365940d31.js": "/github.io-todo/precache-manifest.7e13c9ddee2e7c943b8aa71365940d31.js",
+    "precache-manifest.cf8390b279ae3b18412133dd9d365504.js": "/github.io-todo/precache-manifest.cf8390b279ae3b18412133dd9d365504.js",
     "service-worker.js": "/github.io-todo/service-worker.js",
-    "static/css/main.76b53fdc.chunk.css.map": "/github.io-todo/static/css/main.76b53fdc.chunk.css.map",
+    "static/css/main.26d74221.chunk.css.map": "/github.io-todo/static/css/main.26d74221.chunk.css.map",
     "static/js/2.c2ce1649.chunk.js.LICENSE.txt": "/github.io-todo/static/js/2.c2ce1649.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.250060ea.js",
     "static/js/2.c2ce1649.chunk.js",
-    "static/css/main.76b53fdc.chunk.css",
+    "static/css/main.26d74221.chunk.css",
     "static/js/main.a866e350.chunk.js"
   ]
 }
