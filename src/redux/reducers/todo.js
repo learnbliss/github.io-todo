@@ -1,19 +1,28 @@
 import {
-    ADD_TODO, CLEAR_ALL, CLEAR_LAST_DELETED, CONFIRM,
-    CONFIRM_DELETE,
+    ADD_NEW_LIST,
+    ADD_TODO, CLEAR_LIST, CLEAR_LAST_DELETED, CONFIRM,
+    CONFIRM_DELETE, DELETE_CURRENT_LIST,
     DELETE_TODO,
     EDIT_MODE,
     EDIT_TODO,
     LOAD_TODOS_FROM_LOCALSTORAGE, REVERT_DELETED,
-    SET_CHECKED, SUCCESS
+    SET_CHECKED, SET_CURRENT_LIST, SUCCESS
 } from '../constants';
+import {deleteKeyInObj} from '../utils';
 
 const initialState = {
-    todoList: [],
+    todoList: {
+        default: [],
+        movie: [],
+        simple: [],
+    },
     editMode: null,
     confirmDeleteId: null,
     lastDeleted: null,
-    confirmClearAll: false,
+    confirmClearList: false,
+    currentList: 'default',
+    newListName: false,
+    deleteList: '',
 };
 
 export default (state = initialState, action) => {
@@ -22,13 +31,19 @@ export default (state = initialState, action) => {
         case ADD_TODO:
             return {
                 ...state,
-                todoList: [...state.todoList, payload]
+                todoList: {
+                    ...state.todoList,
+                    [state.currentList]: [...state.todoList[state.currentList], payload.newTodo]
+                }
             };
         case DELETE_TODO:
             return {
                 ...state,
-                todoList: state.todoList.filter(item => (item.id !== payload.id)),
-                lastDeleted: state.todoList.find(item => {
+                todoList: {
+                    ...state.todoList,
+                    [state.currentList]: state.todoList[state.currentList].filter(item => (item.id !== payload.id))
+                },
+                lastDeleted: state.todoList[state.currentList].find(item => {
                     if (item.id === payload.id) {
                         return item
                     }
@@ -44,29 +59,36 @@ export default (state = initialState, action) => {
         case EDIT_TODO:
             return {
                 ...state,
-                todoList: state.todoList.map(item => {
-                    if (item.id === payload.task.id) {
-                        return {...item, text: payload.text}
-                    }
-                    return item
-                }),
+                todoList: {
+                    ...state.todoList,
+                    [state.currentList]: state.todoList[state.currentList].map(item => {
+                        if (item.id === payload.task.id) {
+                            return {...item, text: payload.text}
+                        }
+                        return item
+                    })
+                },
                 editMode: null,
             };
         case LOAD_TODOS_FROM_LOCALSTORAGE: {
             return {
                 ...state,
-                todoList: payload.localStorageData,
+                todoList: payload.localStorageTodoList,
+                currentList: payload.localStorageCurrentList,
             }
         }
         case SET_CHECKED:
             return {
                 ...state,
-                todoList: state.todoList.map(item => {
-                    if (item.id === payload.id) {
-                        return {...item, checked: !item.checked}
-                    }
-                    return item
-                })
+                todoList: {
+                    ...state.todoList,
+                    [state.currentList]: state.todoList[state.currentList].map(item => {
+                        if (item.id === payload.id) {
+                            return {...item, checked: !item.checked}
+                        }
+                        return item
+                    })
+                }
             };
         case CONFIRM_DELETE:
             return {
@@ -81,20 +103,53 @@ export default (state = initialState, action) => {
         case REVERT_DELETED:
             return {
                 ...state,
-                todoList: [...state.todoList, state.lastDeleted],
+                todoList: {
+                    ...state.todoList,
+                    [state.currentList]: [...state.todoList[state.currentList], state.lastDeleted]
+                },
                 lastDeleted: null
             };
-        case CLEAR_ALL + CONFIRM:
+        case CLEAR_LIST + CONFIRM:
             return {
                 ...state,
-                confirmClearAll: !state.confirmClearAll
+                confirmClearList: !state.confirmClearList
             };
-            case CLEAR_ALL + SUCCESS:
+        case CLEAR_LIST + SUCCESS:
             return {
                 ...state,
-                todoList: [],
+                todoList: {...state.todoList, [state.currentList]: []},
                 lastDeleted: null,
-                confirmClearAll: false
+                confirmClearList: false
+            };
+        case SET_CURRENT_LIST:
+            return {
+                ...state,
+                currentList: payload.currentList,
+            };
+        case ADD_NEW_LIST + CONFIRM:
+            return {
+                ...state,
+                newListName: true,
+            };
+        case ADD_NEW_LIST + SUCCESS:
+            return {
+                ...state,
+                todoList: {
+                    ...state.todoList,
+                    [state.newListName]: [],
+                }
+            };
+        case DELETE_CURRENT_LIST + CONFIRM:
+            return {
+                ...state,
+                deleteList: !state.deleteList && state.currentList
+            };
+        case DELETE_CURRENT_LIST + SUCCESS:
+            return {
+                ...state,
+                todoList: deleteKeyInObj([state.deleteList], state.todoList),
+                currentList: Object.keys(state.todoList)[0],
+                deleteList: '',
             };
         default:
             return state

@@ -15,49 +15,23 @@
   }
 }
 
-.head {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  .btn {
-    cursor: pointer;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
-    padding: .3rem .5rem;
-    border-radius: .2rem;
+@keyframes backOpacity {
+  0% {
+    transform: scale(.9);
+    opacity: 0;
   }
-}
-
-.empty {
-  font-style: italic;
-  color: lightgray;
-  font-weight: bold;
-}
-
-.revert {
-  position: fixed;
-  background-color: rgba(1, 1, 1, .9);
-  color: white;
-  width: 100%;
-  bottom: 0;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(100%) scaleY(0);
-  opacity: 0;
-  transition: transform .3s, opacity .3s ease-in-out;
-  padding: 1rem 0;
-}
-
-.revert.view {
-  transform: translateY(0) scaleY(1);
-  opacity: 1;
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @media all and (max-width: 768px) {
   .root {
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto;
     height: 100%;
     width: 100%;
     border-radius: unset;

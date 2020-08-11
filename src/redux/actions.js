@@ -5,10 +5,10 @@ import {
     EDIT_MODE,
     EDIT_TODO, CLEAR_LAST_DELETED,
     LOAD_TODOS_FROM_LOCALSTORAGE,
-    SET_CHECKED, REVERT_DELETED, CLEAR_ALL, CONFIRM, SUCCESS
+    SET_CHECKED, REVERT_DELETED, CLEAR_LIST, CONFIRM, SUCCESS, SET_CURRENT_LIST, ADD_NEW_LIST, DELETE_CURRENT_LIST
 } from './constants';
 import {v4 as uuidv4} from 'uuid';
-import {lastDeletedSelector} from './selectors';
+import {currentListSelector, lastDeletedSelector} from './selectors';
 
 export const confirmDelete = (id) => ({
     type: CONFIRM_DELETE,
@@ -31,7 +31,8 @@ export const addTodo = (text, task) => {
             return dispatch({type: EDIT_TODO, payload: {text, task}})
         }
         const uuid = uuidv4();
-        dispatch({type: ADD_TODO, payload: {id: uuid, text: text, checked: false}})
+        const newTodo = {id: uuid, text: text, checked: false};
+        dispatch({type: ADD_TODO, payload: {newTodo}})
     };
 };
 
@@ -42,14 +43,18 @@ export const setEditMode = (id) => ({
 
 export const loadTodosFromLocalStorage = () => {
     return (dispatch) => {
-        const localStorageData = JSON.parse(localStorage.getItem('todoList'));
-        dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {localStorageData}})
+        if (localStorage.getItem('todoList')) {
+            const localStorageTodoList = JSON.parse(localStorage.getItem('todoList'));
+            const localStorageCurrentList = JSON.parse(localStorage.getItem('currentList'));
+            dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {localStorageTodoList, localStorageCurrentList}})
+        }
     };
 };
 
-export const addTodosInLocalStorage = (todoList) => {
+export const addTodosInLocalStorage = (todoList, currentList) => {
     return () => {
-        localStorage.setItem('todoList', JSON.stringify(todoList))
+        localStorage.setItem('todoList', JSON.stringify(todoList));
+        localStorage.setItem('currentList', JSON.stringify(currentList));
     };
 };
 
@@ -68,16 +73,24 @@ export const revertDeleted = () => {
     };
 };
 
-export const clearAll = (value) => {
+export const clearList = (value) => {
     return async (dispatch) => {
-        try {
-            if (value !== 'confirm') {
-                dispatch({type: CLEAR_ALL + CONFIRM})
-            } else {
-                dispatch({type: CLEAR_ALL + SUCCESS})
-            }
-        } catch (err) {
-            console.error(err);
+        if (value !== 'confirm') {
+            dispatch({type: CLEAR_LIST + CONFIRM})
+        } else {
+            dispatch({type: CLEAR_LIST + SUCCESS})
         }
     };
 };
+
+export const setCurrentList = (currentList) => ({
+    type: SET_CURRENT_LIST,
+    payload: {currentList}
+});
+
+export const addNewListConfirm = () => ({type: ADD_NEW_LIST + CONFIRM});
+export const addNewListSuccess = (nameList) => ({type: ADD_NEW_LIST + SUCCESS, payload: {nameList}});
+
+export const deleteCurrentListConfirm = () => ({type: DELETE_CURRENT_LIST + CONFIRM});
+export const deleteCurrentList = () => ({type: DELETE_CURRENT_LIST + SUCCESS});
+

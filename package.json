@@ -20,7 +20,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "latest",
     "reselect": "^4.0.0",
-    "uuid": "^8.2.0"
+    "uuid": "^8.2.0",
+    "prop-types": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

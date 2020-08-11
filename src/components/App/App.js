@@ -16,7 +16,7 @@ class App extends React.Component {
 
     render() {
         if (this.state.error) {
-            return <h1>{this.state.error.message}</h1>;
+            return <h1 style={{color: 'white'}}>{this.state.error.message}</h1>;
         }
         return (
             <div className="App">

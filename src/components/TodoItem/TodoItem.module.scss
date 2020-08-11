@@ -5,7 +5,7 @@
   align-items: center;
   grid-gap: .5rem;
   box-shadow: 0 5px 7px -5px rgba(0, 0, 0, 0.75);
-  //border-bottom: 1px solid gray;
+  animation: rootScale .2s;
 }
 
 .todoText {
@@ -26,4 +26,13 @@
 
 .checked {
   text-decoration: line-through solid red;
+}
+
+@keyframes rootScale {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
 }

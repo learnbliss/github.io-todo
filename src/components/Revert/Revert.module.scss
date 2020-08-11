@@ -1,0 +1,27 @@
+.revert {
+  position: absolute;
+  background-color: rgba(1, 1, 1, .9);
+  color: white;
+  width: 100%;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(100%) scaleY(0);
+  opacity: 0;
+  transition: transform .3s, opacity .3s ease-in-out;
+  padding: 1rem 0;
+}
+
+.revert.view {
+  transform: translateY(0) scaleY(1);
+  opacity: 1;
+}
+
+@media all and (max-width: 768px) {
+  .revert {
+    position: fixed;
+  }
+}

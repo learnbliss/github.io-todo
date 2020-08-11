@@ -4,8 +4,16 @@ import styles from './ConfirmAction.module.scss'
 import Button from '@material-ui/core/Button';
 
 const ConfirmAction = ({positiveFn, negativeFn = positiveFn, positive = true, negative = false, head = 'Confirm delete?'}) => {
+    const escape = (e) => {
+        console.log('e.key: ', e.key);
+        if (e.key === 'Escape') {
+            negativeFn(negative)
+        }
+    };
     return (
-        <div className={styles.confirmButton} onClick={() => negativeFn(negative)}>
+        <div className={styles.confirmButton}
+             onClick={() => negativeFn(negative)}
+             onKeyDown={(e) => escape(e)}>
             <span>{head}</span>
             <Button onClick={(e) => {
                 e.stopPropagation();
