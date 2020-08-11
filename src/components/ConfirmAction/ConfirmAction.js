@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styles from './ConfirmAction.module.scss'
 import Button from '@material-ui/core/Button';
@@ -10,11 +10,16 @@ const ConfirmAction = ({positiveFn, negativeFn = positiveFn, positive = true, ne
             negativeFn(negative)
         }
     };
+    useEffect(() => {
+        document.addEventListener('keydown', escape, false);
+        return () => {
+            document.removeEventListener('keydown', escape, false);
+        };
+    }, []); //eslint-disable-line
     return (
         <div className={styles.confirmButton}
-             onClick={() => negativeFn(negative)}
-             onKeyDown={(e) => escape(e)}>
-            <span>{head}</span>
+             onClick={() => negativeFn(negative)}>
+            <span onKeyDown={(e) => escape(e)}>{head}</span>
             <Button onClick={(e) => {
                 e.stopPropagation();
                 positiveFn(positive)

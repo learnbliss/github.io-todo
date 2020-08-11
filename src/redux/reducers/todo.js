@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
                     ...state.todoList,
                     [state.currentList]: state.todoList[state.currentList].map(item => {
                         if (item.id === payload.task.id) {
-                            return {...item, text: payload.text}
+                            return {...item, text: payload.upperCase}
                         }
                         return item
                     })
@@ -129,15 +129,17 @@ export default (state = initialState, action) => {
         case ADD_NEW_LIST + CONFIRM:
             return {
                 ...state,
-                newListName: true,
+                newListName: !state.newListName,
             };
         case ADD_NEW_LIST + SUCCESS:
             return {
                 ...state,
                 todoList: {
                     ...state.todoList,
-                    [state.newListName]: [],
-                }
+                    [payload.nameList]: [],
+                },
+                newListName: false,
+                currentList: payload.nameList,
             };
         case DELETE_CURRENT_LIST + CONFIRM:
             return {

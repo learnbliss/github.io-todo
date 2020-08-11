@@ -17,6 +17,7 @@ import {
 import ConfirmAction from '../ConfirmAction';
 import ButtonPrimary from '../ButtonPrimary';
 import SelectList from '../SelectList';
+import ListInput from '../ListInput';
 
 const ListsMenu = ({currentList, clearList, newListName, addNewListConfirm, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList}) => {
 
@@ -27,7 +28,7 @@ const ListsMenu = ({currentList, clearList, newListName, addNewListConfirm, dele
                 <div className={styles.inputNameList}>
                     <div className={styles.background}>
                         <div className={styles.inputWrapper}>
-                            <input/>
+                            <ListInput/>
                             <CreateIcon/>
                         </div>
                     </div>

@@ -27,11 +27,15 @@ export const deleteTodo = (id) => {
 
 export const addTodo = (text, task) => {
     return (dispatch) => {
+        const upperCase = text.replace(/^([A-zА-яё])/, (match) => {
+            console.log('match: ', match);
+            return match.toUpperCase()
+        });
         if (task) {
-            return dispatch({type: EDIT_TODO, payload: {text, task}})
+            return dispatch({type: EDIT_TODO, payload: {upperCase, task}})
         }
         const uuid = uuidv4();
-        const newTodo = {id: uuid, text: text, checked: false};
+        const newTodo = {id: uuid, text: upperCase, checked: false};
         dispatch({type: ADD_TODO, payload: {newTodo}})
     };
 };
