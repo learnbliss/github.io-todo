@@ -8,7 +8,13 @@ import {
     shouldBeOneListSelector,
     todoListSelector
 } from '../../redux/selectors';
-import {addTodosInLocalStorage, loadTodosFromLocalStorage, revertDeleted, setShouldBeOne} from '../../redux/actions';
+import {
+    addTodo,
+    addTodosInLocalStorage,
+    loadTodosFromLocalStorage,
+    revertDeleted, setEditMode,
+    setShouldBeOne
+} from '../../redux/actions';
 import TodoInput from '../TodoInput';
 import Header from '../Header';
 import ListsMenu from '../ListsMenu';
@@ -16,7 +22,7 @@ import LayoutList from '../LayoutList';
 import PopUp from '../PopUp';
 // import './todoList.css';
 
-const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted, shouldBeOneList, setShouldBeOne}) => {
+const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted, shouldBeOneList, setShouldBeOne, setEditMode, addTodo}) => {
     useEffect(() => {
         loadTodosFromLocalStorage();
     }, []); //eslint-disable-line
@@ -32,7 +38,7 @@ const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInL
             <LayoutList/>
             <div>
                 <div className="bold">Add new task:</div>
-                <TodoInput/>
+                <TodoInput fnQuery={setEditMode} fnApply={addTodo} placeholder="what do you need to do?"/>
             </div>
             <PopUp message="revert back"
                    viewProp={lastDeleted}
@@ -62,4 +68,6 @@ export default connect((state) => ({
     addTodosInLocalStorage,
     revertDeleted,
     setShouldBeOne,
+    setEditMode,
+    addTodo,
 })(TodoList);

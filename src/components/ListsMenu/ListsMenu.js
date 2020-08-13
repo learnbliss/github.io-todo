@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ListsMenu.module.scss'
 import {
+    addNewListConfirm, addNewListSuccess,
     clearList,
     deleteCurrentList,
     deleteCurrentListConfirm, renameList,
@@ -19,16 +20,17 @@ import CreateIcon from '@material-ui/icons/Create';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import TodoInput from '../TodoInput';
 
-const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList, renameList, newListName}) => {
+const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList, renameList, newListName, addNewListConfirm, addNewListSuccess}) => {
     return (
         <div className={styles.head}>
             <ListHead/>
             <div className="bold">Select list:</div>
-            {newListName ? <TodoInput/>
+            {newListName
+                ? <TodoInput fnQuery={addNewListConfirm} fnApply={addNewListSuccess} placeholder="name new list"/>
                 : <div className={styles.lists}>
                     <SelectList/>
                     <div className={styles.buttons}>
-                        <CreateIcon onClick={() => renameList()} titleAccess="Rename list"/>
+                        <CreateIcon onClick={() => renameList(currentList)} titleAccess="Rename list"/>
                         <ClearAllIcon onClick={() => clearList()} titleAccess="Clear list"/>
                         {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={renameList} name="Rename"/>*/}
                         {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={clearList} name="Clear"/>*/}
@@ -70,4 +72,6 @@ export default connect(state => ({
     deleteCurrentListConfirm,
     deleteCurrentList,
     renameList,
+    addNewListConfirm,
+    addNewListSuccess,
 })(ListsMenu);

@@ -2,24 +2,24 @@ import React from 'react';
 import styles from './TodoItem.module.scss'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {confirmDelete, deleteTodo, setChecked, setEditMode} from '../../redux/actions';
+import {addTodo, confirmDelete, deleteTodo, setChecked, setEditMode} from '../../redux/actions';
 import CreateIcon from '@material-ui/icons/Create';
 import CloseIcon from '@material-ui/icons/Close';
 import TodoInput from '../TodoInput';
-import {confirmDeleteModSelector, editModeSelector} from '../../redux/selectors';
+import {confirmDeleteModSelector, editModeSelector, idTodoItemSelector} from '../../redux/selectors';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import cn from 'classnames'
 import ConfirmAction from '../ConfirmAction';
 
-const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked, confirmId, confirmDelete}) => {
+const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, setChecked, confirmId, confirmDelete, addTodo, task}) => {
     const setEditNoChecked = (id) => {
         if (!checked) setEditMode(id)
     };
     return (
         <>
             {editMode === id?
-                <TodoInput edit={true}/>
+                <TodoInput fnQuery={setEditMode} fnApply={addTodo} initialData={task}/>
                 : <div className={styles.todoItem}>
                     <span className={styles.todoText}
                           onDoubleClick={() => setEditNoChecked(id)}>
@@ -70,9 +70,11 @@ TodoItem.propTypes = {
 export default connect((state) => ({
     editMode: editModeSelector(state),
     confirmId: confirmDeleteModSelector(state),
+    task: idTodoItemSelector(state),
 }), {
     deleteTodo,
     setEditMode,
     setChecked,
     confirmDelete,
+    addTodo,
 })(TodoItem);

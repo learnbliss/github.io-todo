@@ -1,20 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './TodoInput.module.scss'
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {addTodo, setEditMode} from '../../redux/actions';
-import {idTodoItemSelector} from '../../redux/selectors';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import EditIcon from '@material-ui/icons/Edit';
 
-const TodoInput = ({addTodo, task, setEditMode, edit}) => {
-    const [input, setInput] = useState(task?.text || '');
+const TodoInput = ({fnApply, initialData, fnQuery, placeholder}) => {
+    const [input, setInput] = useState('');
+    useEffect(() => {
+        if (initialData?.text) {
+            setInput(initialData.text);
+        } else if (typeof (initialData) === 'string') {
+            setInput(initialData);
+        }
+    }, []); //eslint-disable-line
 
     const handleClick = () => {
         if (input.length === 0) {
             return
         }
-        addTodo(input, task);
+        fnApply(input, initialData);
         setInput('');
     };
 
@@ -22,48 +26,42 @@ const TodoInput = ({addTodo, task, setEditMode, edit}) => {
         if (e.key === 'Enter') {
             handleClick()
         } else if (e.key === 'Escape') {
-            setEditMode(null)
+            fnQuery(null);
         }
     };
 
     const handleBlur = () => {
-        if (task) {
+        if (initialData) {
             return handleClick()
         }
-        setEditMode(null)
+        fnQuery(null)
     };
 
     return (
         <div className={styles.todoInput}>
             <input
-                placeholder="what do you need to do?"
+                placeholder={placeholder}
                 onBlur={() => handleBlur()}
-                autoFocus={!!task}
+                autoFocus
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e)}
                 className={styles.input}/>
             <span
                 onClick={() => handleClick()}>
-                {edit ? <EditIcon/> : <PostAddIcon/>}
+                {initialData ? <EditIcon/> : <PostAddIcon/>}
             </span>
         </div>
     );
 };
 
 TodoInput.propTypes = {
-    addTodo: PropTypes.func.isRequired,
-    task: PropTypes.shape({
+    fnApply: PropTypes.func.isRequired,
+    initialData: PropTypes.shape({
         id: PropTypes.string,
         text: PropTypes.string,
-    }),
-    setEditMode: PropTypes.func,
-    edit: PropTypes.bool,
+    }) || PropTypes.string,
+    fnQuery: PropTypes.func.isRequired,
 };
 
-export default connect((state) => ({
-    task: idTodoItemSelector(state),
-}), {
-    addTodo,
-    setEditMode
-})(TodoInput);
+export default TodoInput;

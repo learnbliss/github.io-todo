@@ -6,7 +6,6 @@ export const deleteKeyInObj = (key, obj) => {
 
 export const upperCase = (text) => {
     return text.replace(/^([A-zА-яё])/, (match) => {
-        console.log('match: ', match);
         return match.toUpperCase()
     })
 };

@@ -3,6 +3,9 @@
   justify-content: space-between;
   padding-top: .4rem;
   animation: rootScale .2s;
+  svg {
+    cursor: pointer;
+  }
 }
 
 //todo дублирование анимации
