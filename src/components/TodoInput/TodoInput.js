@@ -36,6 +36,7 @@ const TodoInput = ({addTodo, task, setEditMode, edit}) => {
     return (
         <div className={styles.todoInput}>
             <input
+                placeholder="what do you need to do?"
                 onBlur={() => handleBlur()}
                 autoFocus={!!task}
                 value={input}

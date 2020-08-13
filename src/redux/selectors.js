@@ -8,7 +8,7 @@ export const todoListLengthSelector = createSelector(
     todoListSelector,
     (currentList, todoList) => {
 
-        return todoList[currentList].length
+        return todoList[currentList]?.length
     }
 );
 
@@ -19,7 +19,7 @@ export const idTodoItemSelector = createSelector(
     editModeSelector,
     currentListSelector,
     (todoList, id, currentList) => {
-        return todoList[currentList].find(item => item.id === id)
+        return todoList[currentList]?.find(item => item.id === id)
     }
 );
 
@@ -44,3 +44,5 @@ export const todoListNameSelector = createSelector(
 
 export const newListNameSelector = (state) => state.todo.newListName;
 export const deleteListSelector = (state) => state.todo.deleteList;
+export const shouldBeOneListSelector = (state) => state.todo.shouldBeOneList;
+

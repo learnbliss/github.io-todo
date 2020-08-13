@@ -6,24 +6,25 @@ import {
     EDIT_MODE,
     EDIT_TODO,
     LOAD_TODOS_FROM_LOCALSTORAGE, REVERT_DELETED,
-    SET_CHECKED, SET_CURRENT_LIST, SUCCESS
+    SET_CHECKED, SET_CURRENT_LIST, SUCCESS, SHOULD_BE_ONE_LIST, RENAME_LIST
 } from '../constants';
 import {deleteKeyInObj} from '../utils';
 
 const initialState = {
     todoList: {
-        default: [],
-        movie: [],
-        simple: [],
+        Default: [],
     },
     editMode: null,
     confirmDeleteId: null,
     lastDeleted: null,
     confirmClearList: false,
-    currentList: 'default',
+    currentList: 'Default',
     newListName: false,
     deleteList: '',
+    shouldBeOneList: false,
 };
+
+// todo посмотреть как бы разбить 2 или несколько редьюсеров, а то какой-то здоровый :\
 
 export default (state = initialState, action) => {
     const {type, payload} = action;
@@ -63,7 +64,7 @@ export default (state = initialState, action) => {
                     ...state.todoList,
                     [state.currentList]: state.todoList[state.currentList].map(item => {
                         if (item.id === payload.task.id) {
-                            return {...item, text: payload.upperCase}
+                            return {...item, text: payload.upperText}
                         }
                         return item
                     })
@@ -136,10 +137,10 @@ export default (state = initialState, action) => {
                 ...state,
                 todoList: {
                     ...state.todoList,
-                    [payload.nameList]: [],
+                    [payload.upperText]: [],
                 },
                 newListName: false,
-                currentList: payload.nameList,
+                currentList: payload.upperText,
             };
         case DELETE_CURRENT_LIST + CONFIRM:
             return {
@@ -150,8 +151,22 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 todoList: deleteKeyInObj([state.deleteList], state.todoList),
-                currentList: Object.keys(state.todoList)[0],
+                currentList: payload.newList,
                 deleteList: '',
+            };
+        case SHOULD_BE_ONE_LIST:
+            return {
+                ...state,
+                deleteList: '',
+                shouldBeOneList: !state.shouldBeOneList,
+            };
+        case RENAME_LIST:
+            return {
+                ...state,
+                todoList: {
+                    ...state.todoList,
+                    [payload.newListName]: Object.keys(state.todoList)
+                }
             };
         default:
             return state

@@ -22,7 +22,11 @@ const SelectList = ({currentList, setCurrentList, todoListArr}) => {
     );
 };
 
-SelectList.propTypes = {};
+SelectList.propTypes = {
+    currentList: PropTypes.string,
+    setCurrentList: PropTypes.func,
+    todoListArr: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default connect(state => ({
     currentList: currentListSelector(state),

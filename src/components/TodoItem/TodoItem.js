@@ -29,9 +29,9 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                         <span className={cn({[styles.checked]: checked})}>{index + 1}) {text}</span>
                     </span>
                     <div className={styles.edit}>
-                        <CreateIcon
+                        <CreateIcon titleAccess="Edit task"
                             onClick={() => setEditNoChecked(id)}/>
-                        <CloseIcon
+                        <CloseIcon titleAccess="Delete task"
                             onClick={() => confirmDelete(id)}/>
                         {confirmId === id &&
                         // <div className={styles.confirmButton} onClick={() => confirmDelete(null)}>

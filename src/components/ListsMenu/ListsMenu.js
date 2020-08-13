@@ -1,69 +1,73 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ListsMenu.module.scss'
-import CreateIcon from '@material-ui/icons/Create';
 import {
-    addNewListConfirm,
     clearList,
     deleteCurrentList,
-    deleteCurrentListConfirm,
+    deleteCurrentListConfirm, renameList,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
 import {
     confirmClearListSelector,
-    currentListSelector, deleteListSelector,
-    newListNameSelector,
+    currentListSelector, deleteListSelector, newListNameSelector,
 } from '../../redux/selectors';
 import ConfirmAction from '../ConfirmAction';
 import ButtonPrimary from '../ButtonPrimary';
 import SelectList from '../SelectList';
-import ListInput from '../ListInput';
+import ListHead from '../ListHead';
+import CreateIcon from '@material-ui/icons/Create';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import TodoInput from '../TodoInput';
 
-const ListsMenu = ({currentList, clearList, newListName, addNewListConfirm, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList}) => {
-
+const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList, renameList, newListName}) => {
     return (
         <div className={styles.head}>
-            <div className={styles.list}>
-                {newListName &&
-                <div className={styles.inputNameList}>
-                    <div className={styles.background}>
-                        <div className={styles.inputWrapper}>
-                            <ListInput/>
-                            <CreateIcon/>
-                        </div>
+            <ListHead/>
+            <div className="bold">Select list:</div>
+            {newListName ? <TodoInput/>
+                : <div className={styles.lists}>
+                    <SelectList/>
+                    <div className={styles.buttons}>
+                        <CreateIcon onClick={() => renameList()} titleAccess="Rename list"/>
+                        <ClearAllIcon onClick={() => clearList()} titleAccess="Clear list"/>
+                        {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={renameList} name="Rename"/>*/}
+                        {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={clearList} name="Clear"/>*/}
                     </div>
-                </div>}
-                <ButtonPrimary buttonClick={addNewListConfirm} name="Add list"/>
-                <ButtonPrimary buttonClick={deleteCurrentListConfirm} name="Delete list"/>
-            </div>
-            <SelectList/>
-            <ButtonPrimary buttonClick={clearList} name="Clear List"/>
+                </div>
+            }
             {deleteList &&
             <ConfirmAction
                 positiveFn={deleteCurrentList}
                 negativeFn={deleteCurrentListConfirm}
-                head={`Want to clear all list "${currentList}"?`}
+                head={`Want to delete all list "${currentList}"?`}
             />}
             {confirmClearList &&
             <ConfirmAction
                 positiveFn={clearList}
                 positive={'confirm'}
-                head={'Want to delete everything?'}
+                head={'Want to clear all list?'}
             />}
         </div>
     );
 };
 
-ListsMenu.propTypes = {};
+ListsMenu.propTypes = {
+    currentList: PropTypes.string,
+    clearList: PropTypes.func,
+    deleteCurrentListConfirm: PropTypes.func,
+    confirmClearList: PropTypes.bool,
+    deleteList: PropTypes.string,
+    deleteCurrentList: PropTypes.func,
+};
 
 export default connect(state => ({
     currentList: currentListSelector(state),
-    newListName: newListNameSelector(state),
     confirmClearList: confirmClearListSelector(state),
     deleteList: deleteListSelector(state),
+    newListName: newListNameSelector(state),
 }), {
     clearList,
-    addNewListConfirm,
     deleteCurrentListConfirm,
     deleteCurrentList,
+    renameList,
 })(ListsMenu);

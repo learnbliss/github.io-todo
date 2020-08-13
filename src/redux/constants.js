@@ -13,3 +13,5 @@ export const SUCCESS = '_SUCCESS';
 export const SET_CURRENT_LIST = 'SET_CURRENT_LIST';
 export const ADD_NEW_LIST = 'ADD_NEW_LIST';
 export const DELETE_CURRENT_LIST = 'DELETE_CURRENT_LIST';
+export const SHOULD_BE_ONE_LIST = 'SHOULD_BE_ONE_LIST';
+export const RENAME_LIST = 'RENAME_LIST';

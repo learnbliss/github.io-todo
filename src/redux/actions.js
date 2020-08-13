@@ -3,12 +3,22 @@ import {
     CONFIRM_DELETE,
     DELETE_TODO,
     EDIT_MODE,
-    EDIT_TODO, CLEAR_LAST_DELETED,
+    EDIT_TODO,
+    CLEAR_LAST_DELETED,
     LOAD_TODOS_FROM_LOCALSTORAGE,
-    SET_CHECKED, REVERT_DELETED, CLEAR_LIST, CONFIRM, SUCCESS, SET_CURRENT_LIST, ADD_NEW_LIST, DELETE_CURRENT_LIST
+    SET_CHECKED,
+    REVERT_DELETED,
+    CLEAR_LIST,
+    CONFIRM,
+    SUCCESS,
+    SET_CURRENT_LIST,
+    ADD_NEW_LIST,
+    DELETE_CURRENT_LIST,
+    SHOULD_BE_ONE_LIST, RENAME_LIST
 } from './constants';
 import {v4 as uuidv4} from 'uuid';
-import {currentListSelector, lastDeletedSelector} from './selectors';
+import {currentListSelector, lastDeletedSelector, todoListNameSelector, todoListToArrSelector} from './selectors';
+import {upperCase} from './utils';
 
 export const confirmDelete = (id) => ({
     type: CONFIRM_DELETE,
@@ -27,15 +37,12 @@ export const deleteTodo = (id) => {
 
 export const addTodo = (text, task) => {
     return (dispatch) => {
-        const upperCase = text.replace(/^([A-zА-яё])/, (match) => {
-            console.log('match: ', match);
-            return match.toUpperCase()
-        });
+        const upperText = upperCase(text);
         if (task) {
-            return dispatch({type: EDIT_TODO, payload: {upperCase, task}})
+            return dispatch({type: EDIT_TODO, payload: {upperText, task}})
         }
         const uuid = uuidv4();
-        const newTodo = {id: uuid, text: upperCase, checked: false};
+        const newTodo = {id: uuid, text: upperText, checked: false};
         dispatch({type: ADD_TODO, payload: {newTodo}})
     };
 };
@@ -93,8 +100,57 @@ export const setCurrentList = (currentList) => ({
 });
 
 export const addNewListConfirm = () => ({type: ADD_NEW_LIST + CONFIRM});
-export const addNewListSuccess = (nameList) => ({type: ADD_NEW_LIST + SUCCESS, payload: {nameList}});
 
-export const deleteCurrentListConfirm = () => ({type: DELETE_CURRENT_LIST + CONFIRM});
-export const deleteCurrentList = () => ({type: DELETE_CURRENT_LIST + SUCCESS});
+export const addNewListSuccess = (nameList) => {
+    return (dispatch) => {
+        const upperText = upperCase(nameList);
+        dispatch({type: ADD_NEW_LIST + SUCCESS, payload: {upperText}})
+    };
+};
+
+export const deleteCurrentListConfirm = () => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const todoListArr = todoListToArrSelector(state);
+        if (todoListArr.length === 1) {
+            dispatch({type: SHOULD_BE_ONE_LIST});
+            timer = setTimeout(() => (dispatch({type: SHOULD_BE_ONE_LIST})), 3000)
+        } else {
+            dispatch({type: DELETE_CURRENT_LIST + CONFIRM})
+        }
+    };
+};
+
+
+export const deleteCurrentList = () => {
+    return (dispatch, getState) => {
+        const state = getState();
+        const todoListArr = todoListToArrSelector(state);
+        const currentList = currentListSelector(state);
+        let newList;
+
+        todoListArr.forEach((list, index) => {
+            if (list === currentList) {
+                if (index === 0) {
+                    newList = todoListArr[index + 1]
+                } else {
+                    newList = todoListArr[index - 1]
+                }
+                dispatch({type: DELETE_CURRENT_LIST + SUCCESS, payload: {newList}})
+            }
+        })
+    };
+};
+
+export const setShouldBeOne = () => {
+    return (dispatch) => {
+        clearTimeout(timer);
+        dispatch({type: SHOULD_BE_ONE_LIST})
+    };
+};
+
+export const renameList = (index, newListName) => ({type: RENAME_LIST, payload: {index, newListName}});
+
+// todo необходимо чтобы на несколько секунд всплывала надпись 'You have 1 list left, no deletion'
+
 

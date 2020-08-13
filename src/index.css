@@ -23,6 +23,10 @@ code {
     monospace;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 @media all and (max-width: 768px) {
   body {
     padding: 0;

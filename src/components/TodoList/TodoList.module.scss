@@ -5,27 +5,12 @@
   display: grid;
   grid-gap: .1rem;
   background-color: white;
-  //box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
   overflow: auto;
   border-radius: .3rem;
 
   > div {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
-    padding: 1rem .7rem;
-  }
-}
-
-@keyframes backOpacity {
-  0% {
-    transform: scale(.9);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
+    padding: .7rem .7rem;
   }
 }
 
