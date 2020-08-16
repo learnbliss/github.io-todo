@@ -6,7 +6,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import cn from 'classnames'
 
 const TodoInput = ({fnApply, initialData, fnQuery, placeholder, maxLength = 150, onBlur = false, editMode = false}) => {
-    console.log('initialData: ', initialData);
     const [input, setInput] = useState('');
     useEffect(() => {
         if (initialData?.text) {
@@ -32,10 +31,7 @@ const TodoInput = ({fnApply, initialData, fnQuery, placeholder, maxLength = 150,
         }
     };
 
-    const handleBlur = (e) => {
-        // if (input.length === 0) {
-        //     return
-        // }
+    const handleBlur = () => {
         if (initialData) {
             return handleClick()
         }
@@ -52,7 +48,7 @@ const TodoInput = ({fnApply, initialData, fnQuery, placeholder, maxLength = 150,
                 onKeyDown={(e) => handleKeyDown(e)}
                 className={cn(styles.input, {[styles.editMode]: editMode})}
                 maxLength={maxLength}
-                onBlur={(e) => (onBlur && handleBlur(e))}/>
+                onBlur={() => (onBlur && handleBlur())}/>
             <span
                 onMouseDown={() => handleClick()}
             >
@@ -69,6 +65,10 @@ TodoInput.propTypes = {
         text: PropTypes.string,
     }) || PropTypes.string,
     fnQuery: PropTypes.func.isRequired,
+    placeholder: PropTypes.string,
+    maxLength: PropTypes.number,
+    onBlur: PropTypes.bool,
+    editMode: PropTypes.bool,
 };
 
 export default TodoInput;

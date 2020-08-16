@@ -2,41 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ListsMenu.module.scss'
 import {
-    addNewListConfirm, addNewListSuccess,
-    clearList,
     deleteCurrentList,
-    deleteCurrentListConfirm, renameListConfirm,
+    deleteCurrentListConfirm,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
 import {
     confirmClearListSelector,
-    currentListSelector, deleteListSelector, listEditSelector, newListNameSelector,
+    currentListSelector, deleteListSelector,
 } from '../../redux/selectors';
 import ConfirmAction from '../ConfirmAction';
-import ButtonPrimary from '../ButtonPrimary';
-import SelectList from '../SelectList';
 import ListHead from '../ListHead';
-import CreateIcon from '@material-ui/icons/Create';
-import ClearAllIcon from '@material-ui/icons/ClearAll';
-import TodoInput from '../TodoInput';
+import Lists from '../Lists';
 
-const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList, newListName, addNewListConfirm, addNewListSuccess, listEdit, renameListConfirm}) => {
+const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList}) => {
     return (
         <div className={styles.head}>
             <ListHead/>
-            <div className="bold">Select list:</div>
-            {listEdit
-                ? <TodoInput fnQuery={addNewListConfirm} fnApply={addNewListSuccess} maxLength={35} editMode={true} onBlur={true} initialData={newListName}/>
-                : <div className={styles.lists}>
-                    <SelectList/>
-                    <div className={styles.buttons}>
-                        <CreateIcon onClick={() => renameListConfirm(currentList)} titleAccess="Rename list"/>
-                        <ClearAllIcon onClick={() => clearList()} titleAccess="Clear list"/>
-                        {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={renameList} name="Rename"/>*/}
-                        {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={clearList} name="Clear"/>*/}
-                    </div>
-                </div>
-            }
+            <Lists/>
             {deleteList &&
             <ConfirmAction
                 positiveFn={deleteCurrentList}
@@ -66,13 +48,7 @@ export default connect(state => ({
     currentList: currentListSelector(state),
     confirmClearList: confirmClearListSelector(state),
     deleteList: deleteListSelector(state),
-    newListName: newListNameSelector(state),
-    listEdit: listEditSelector(state),
 }), {
-    clearList,
     deleteCurrentListConfirm,
     deleteCurrentList,
-    addNewListConfirm,
-    addNewListSuccess,
-    renameListConfirm,
 })(ListsMenu);

@@ -1,0 +1,26 @@
+.lists {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: .7rem;
+  animation: rootScale .2s;
+}
+
+.buttons {
+  display: grid;
+  //grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: .3rem;
+
+  svg {
+    cursor: pointer;
+  }
+}
+
+@keyframes rootScale {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}

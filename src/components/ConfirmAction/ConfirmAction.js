@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 
 const ConfirmAction = ({positiveFn, negativeFn = positiveFn, positive = true, negative = false, head = 'Confirm delete?'}) => {
     const escape = (e) => {
-        console.log('e.key: ', e.key);
         if (e.key === 'Escape') {
             negativeFn(negative)
         }

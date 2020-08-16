@@ -9,20 +9,19 @@ import {
     todoListSelector
 } from '../../redux/selectors';
 import {
-    addTodo,
     addTodosInLocalStorage,
     loadTodosFromLocalStorage,
-    revertDeleted, setEditMode,
+    revertDeleted,
     setShouldBeOne
 } from '../../redux/actions';
-import TodoInput from '../TodoInput';
 import Header from '../Header';
 import ListsMenu from '../ListsMenu';
 import LayoutList from '../LayoutList';
 import PopUp from '../PopUp';
+import FieldNewTask from '../FieldNewTask';
 // import './todoList.css';
 
-const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted, shouldBeOneList, setShouldBeOne, setEditMode, addTodo}) => {
+const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted, shouldBeOneList, setShouldBeOne}) => {
     useEffect(() => {
         loadTodosFromLocalStorage();
     }, []); //eslint-disable-line
@@ -36,26 +35,31 @@ const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInL
             <Header/>
             <ListsMenu/>
             <LayoutList/>
-            <div className={styles.gap}>
-                <div className="bold">Add new task:</div>
-                <TodoInput fnQuery={setEditMode} fnApply={addTodo} placeholder="what do you need to do?"/>
-            </div>
+            <FieldNewTask/>
             <PopUp message="revert back"
                    viewProp={lastDeleted}
                    func={revertDeleted}
-                    icon="history"/>
+                   icon="history"/>
             <PopUp message="You have 1 list left, no deletion"
                    viewProp={shouldBeOneList}
-                    func={setShouldBeOne}/>
+                   func={setShouldBeOne}/>
         </div>
     );
 };
 
 TodoList.propTypes = {
-    todoList: PropTypes.objectOf(Array).isRequired,
+    todoList: PropTypes.objectOf(PropTypes.array).isRequired,
     currentList: PropTypes.string.isRequired,
     loadTodosFromLocalStorage: PropTypes.func,
     addTodosInLocalStorage: PropTypes.func,
+    lastDeleted: PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string,
+        checked: PropTypes.bool,
+    }),
+    revertDeleted: PropTypes.func,
+    shouldBeOneList: PropTypes.bool,
+    setShouldBeOne: PropTypes.func,
 };
 
 export default connect((state) => ({
@@ -68,6 +72,4 @@ export default connect((state) => ({
     addTodosInLocalStorage,
     revertDeleted,
     setShouldBeOne,
-    setEditMode,
-    addTodo,
 })(TodoList);

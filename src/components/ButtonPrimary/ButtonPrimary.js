@@ -16,6 +16,8 @@ const ButtonPrimary = ({buttonClick, name, style, disable = false,}) => {
 ButtonPrimary.propTypes = {
     buttonClick: PropTypes.func,
     name: PropTypes.string,
+    style: PropTypes.object,
+    disable: PropTypes.bool,
 };
 
 export default ButtonPrimary;

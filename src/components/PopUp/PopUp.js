@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './PopUp.module.scss';
 import cn from 'classnames';
-import {connect} from 'react-redux';
-import {lastDeletedSelector} from '../../redux/selectors';
-import {revertDeleted} from '../../redux/actions';
 import HistoryIcon from '@material-ui/icons/History';
 import CloseIcon from '@material-ui/icons/Close';
 
-const PopUp = ({message, viewProp, func, icon, revertDeleted, lastDeleted}) => {
+const PopUp = ({message, viewProp, func, icon}) => {
+    console.log('message: ', message);
+    console.log('viewProp: ', viewProp);
+    console.log('func: ', func);
+    console.log('icon: ', icon);
     return (
         <span onClick={() => func()}
               className={cn(styles.revert, {[styles.view]: viewProp})}
@@ -20,16 +21,14 @@ const PopUp = ({message, viewProp, func, icon, revertDeleted, lastDeleted}) => {
 };
 
 PopUp.propTypes = {
-    revertDeleted: PropTypes.func.isRequired,
-    lastDeleted: PropTypes.shape({
+    message: PropTypes.string,
+    viewProp: PropTypes.shape({
         id: PropTypes.string,
         text: PropTypes.string,
         checked: PropTypes.bool,
-    }),
+    }) || PropTypes.string,
+    func: PropTypes.func,
+    icon: PropTypes.string,
 };
 
-export default connect(state => ({
-    lastDeleted: lastDeletedSelector(state),
-}), {
-    revertDeleted,
-})(PopUp);
+export default PopUp;
