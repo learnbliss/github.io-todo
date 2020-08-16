@@ -16,7 +16,7 @@ const ListHead = ({listEdit, shouldBeOneList, addNewListConfirm, deleteCurrentLi
 };
 
 ListHead.propTypes = {
-    listEdit: PropTypes.string,
+    listEdit: PropTypes.bool,
     addNewListConfirm: PropTypes.func,
     deleteCurrentListConfirm: PropTypes.func,
     shouldBeOneList: PropTypes.bool,

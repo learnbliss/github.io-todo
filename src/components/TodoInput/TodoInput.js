@@ -60,10 +60,7 @@ const TodoInput = ({fnApply, initialData, fnQuery, placeholder, maxLength = 150,
 
 TodoInput.propTypes = {
     fnApply: PropTypes.func.isRequired,
-    initialData: PropTypes.shape({
-        id: PropTypes.string,
-        text: PropTypes.string,
-    }) || PropTypes.string,
+    initialData: PropTypes.any,
     fnQuery: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     maxLength: PropTypes.number,

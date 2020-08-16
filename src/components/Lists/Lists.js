@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import {currentListSelector, listEditSelector, newListNameSelector} from '../../redux/selectors';
 import {addNewListConfirm, addNewListSuccess, clearList, renameListConfirm} from '../../redux/actions';
 
-const Lists = ({listEdit, addNewListConfirm, addNewListSuccess, newListName, renameListConfirm, currentList}) => {
+const Lists = ({listEdit, addNewListConfirm, addNewListSuccess, newListName, renameListConfirm, currentList, clearList}) => {
     return (
         <>
             <div className="bold">Select list:</div>

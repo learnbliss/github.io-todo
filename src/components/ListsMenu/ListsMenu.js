@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ListsMenu.module.scss'
 import {
+    clearList,
     deleteCurrentList,
     deleteCurrentListConfirm,
 } from '../../redux/actions';
@@ -51,4 +52,5 @@ export default connect(state => ({
 }), {
     deleteCurrentListConfirm,
     deleteCurrentList,
+    clearList,
 })(ListsMenu);

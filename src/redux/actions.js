@@ -21,7 +21,6 @@ import {
     currentListSelector,
     lastDeletedSelector,
     newListNameSelector,
-    todoListNameSelector,
     todoListToArrSelector
 } from './selectors';
 import {upperCase} from './utils';
@@ -120,8 +119,7 @@ export const addNewListSuccess = (nameList) => {
 };
 
 export const renameListConfirm = (currentList) => {
-    return (dispatch, getState) => {
-        // const upperText = upperCase(currentList);
+    return (dispatch) => {
         dispatch({type: RENAME_LIST + CONFIRM, payload: {currentList}})
     };
 };
@@ -166,9 +164,3 @@ export const setShouldBeOne = () => {
         dispatch({type: SHOULD_BE_ONE_LIST})
     };
 };
-
-// export const renameList = (currentList) => {
-//     console.log('action currentList: ', currentList);
-//     return {type: RENAME_LIST + CONFIRM, payload: {currentList}}
-// };
-
