@@ -1,8 +1,9 @@
 .todoInput {
   display: flex;
   justify-content: space-between;
-  padding-top: .4rem;
   animation: rootScale .2s;
+  align-items: center;
+
   svg {
     cursor: pointer;
   }
@@ -19,6 +20,15 @@
   border-radius: .3rem;
 }
 
+.input:focus {
+  outline: none;
+  border-color: #2691D4;
+}
+
+.input.editMode {
+  animation: edit 2s linear infinite;
+}
+
 .input::placeholder {
   font-style: italic;
   font-size: .9rem;
@@ -28,6 +38,19 @@
 .input:focus::placeholder {
   color: transparent;
   transform: translateX(1rem);
+  outline: black;
+}
+
+@keyframes edit {
+  0% {
+    box-shadow: 0 0 5px 0 rgba(38,145,212, 1);
+  }
+  50% {
+    box-shadow: unset;
+  }
+  100% {
+    box-shadow: 0 0 5px 0 rgba(38,145,212, 1);
+  }
 }
 
 @keyframes rootScale {

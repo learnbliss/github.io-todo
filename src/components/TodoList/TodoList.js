@@ -36,7 +36,7 @@ const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInL
             <Header/>
             <ListsMenu/>
             <LayoutList/>
-            <div>
+            <div className={styles.gap}>
                 <div className="bold">Add new task:</div>
                 <TodoInput fnQuery={setEditMode} fnApply={addTodo} placeholder="what do you need to do?"/>
             </div>

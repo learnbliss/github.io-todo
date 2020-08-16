@@ -151,6 +151,3 @@ export const setShouldBeOne = () => {
 
 export const renameList = (index, newListName) => ({type: RENAME_LIST, payload: {index, newListName}});
 
-// todo необходимо чтобы на несколько секунд всплывала надпись 'You have 1 list left, no deletion'
-
-

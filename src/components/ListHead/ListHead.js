@@ -5,24 +5,21 @@ import ListInput from '../ListInput/ListInput';
 import ButtonPrimary from '../ButtonPrimary';
 import {connect} from 'react-redux';
 import {addNewListConfirm, deleteCurrentListConfirm} from '../../redux/actions';
-import {newListNameSelector} from '../../redux/selectors';
+import {newListNameSelector, shouldBeOneListSelector} from '../../redux/selectors';
 
-const ListHead = ({newListName, addNewListConfirm, deleteCurrentListConfirm}) => {
+const ListHead = ({newListName, shouldBeOneList, addNewListConfirm, deleteCurrentListConfirm}) => {
     return (
         <div className={styles.list}>
             {/*{newListName &&*/}
             {/*<ListInput/>*/}
             {/*}*/}
-            <ButtonPrimary buttonClick={addNewListConfirm} name="Add new list"/>
-            <ButtonPrimary buttonClick={deleteCurrentListConfirm} name="Delete list"/>
+            <ButtonPrimary buttonClick={addNewListConfirm} name="Add new list" disable={newListName}/>
+            <ButtonPrimary buttonClick={deleteCurrentListConfirm} name="Delete list" disable={shouldBeOneList}/>
         </div>
     );
 };
 
-// todo если список один, то не удалять его
 // todo добавить переименование списков
-// todo продумать как выбирать любой список рядом, после удаления текущего
-// todo выход из input добавления нового списка
 
 ListHead.propTypes = {
     newListName: PropTypes.bool,
@@ -32,6 +29,7 @@ ListHead.propTypes = {
 
 export default connect(state => ({
     newListName: newListNameSelector(state),
+    shouldBeOneList: shouldBeOneListSelector(state),
 }), {
     addNewListConfirm,
     deleteCurrentListConfirm,

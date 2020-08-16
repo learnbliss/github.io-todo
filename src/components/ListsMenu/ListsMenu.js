@@ -26,7 +26,7 @@ const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmCle
             <ListHead/>
             <div className="bold">Select list:</div>
             {newListName
-                ? <TodoInput fnQuery={addNewListConfirm} fnApply={addNewListSuccess} placeholder="name new list"/>
+                ? <TodoInput fnQuery={addNewListConfirm} fnApply={addNewListSuccess} maxLength={35} editMode={true} onBlur={true}/>
                 : <div className={styles.lists}>
                     <SelectList/>
                     <div className={styles.buttons}>

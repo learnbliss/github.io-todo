@@ -17,9 +17,9 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
         if (!checked) setEditMode(id)
     };
     return (
-        <>
+        <div className={styles.root}>
             {editMode === id?
-                <TodoInput fnQuery={setEditMode} fnApply={addTodo} initialData={task}/>
+                <TodoInput fnQuery={setEditMode} fnApply={addTodo} initialData={task} onBlur={true} editMode={true}/>
                 : <div className={styles.todoItem}>
                     <span className={styles.todoText}
                           onDoubleClick={() => setEditNoChecked(id)}>
@@ -34,13 +34,6 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                         <CloseIcon titleAccess="Delete task"
                             onClick={() => confirmDelete(id)}/>
                         {confirmId === id &&
-                        // <div className={styles.confirmButton} onClick={() => confirmDelete(null)}>
-                        //     <span>Want to delete this task?</span>
-                        //     <Button onClick={() => deleteTodo(id)}
-                        //             variant="contained">Yes</Button>
-                        //     <Button onClick={() => confirmDelete(null)}
-                        //             variant="contained">No</Button>
-                        // </div>
                         <ConfirmAction
                             positiveFn={deleteTodo}
                             negativeFn={confirmDelete}
@@ -51,7 +44,7 @@ const TodoItem = ({id, text, checked, index, deleteTodo, editMode, setEditMode, 
                     </div>
                 </div>
             }
-        </>
+        </div>
     );
 };
 

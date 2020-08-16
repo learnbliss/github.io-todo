@@ -1,5 +1,8 @@
-.todoItem {
+.root {
   padding: .5rem 0;
+}
+
+.todoItem {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -12,7 +15,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  word-break: break-all;
+  word-break: break-word;
 
   svg {
     padding-right: .3rem;

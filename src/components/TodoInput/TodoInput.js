@@ -3,8 +3,9 @@ import styles from './TodoInput.module.scss'
 import PropTypes from 'prop-types';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import EditIcon from '@material-ui/icons/Edit';
+import cn from 'classnames'
 
-const TodoInput = ({fnApply, initialData, fnQuery, placeholder}) => {
+const TodoInput = ({fnApply, initialData, fnQuery, placeholder, maxLength = 150, onBlur = false, editMode = false}) => {
     const [input, setInput] = useState('');
     useEffect(() => {
         if (initialData?.text) {
@@ -30,7 +31,10 @@ const TodoInput = ({fnApply, initialData, fnQuery, placeholder}) => {
         }
     };
 
-    const handleBlur = () => {
+    const handleBlur = (e) => {
+        // if (input.length === 0) {
+        //     return
+        // }
         if (initialData) {
             return handleClick()
         }
@@ -41,14 +45,16 @@ const TodoInput = ({fnApply, initialData, fnQuery, placeholder}) => {
         <div className={styles.todoInput}>
             <input
                 placeholder={placeholder}
-                onBlur={() => handleBlur()}
                 autoFocus
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e)}
-                className={styles.input}/>
+                className={cn(styles.input, {[styles.editMode]: editMode})}
+                maxLength={maxLength}
+                onBlur={(e) => (onBlur && handleBlur(e))}/>
             <span
-                onClick={() => handleClick()}>
+                onMouseDown={() => handleClick()}
+            >
                 {initialData ? <EditIcon/> : <PostAddIcon/>}
             </span>
         </div>

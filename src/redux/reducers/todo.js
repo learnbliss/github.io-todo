@@ -166,7 +166,8 @@ export default (state = initialState, action) => {
                 todoList: {
                     ...state.todoList,
                     [payload.newListName]: Object.keys(state.todoList)
-                }
+                },
+                newListName: true,
             };
         default:
             return state

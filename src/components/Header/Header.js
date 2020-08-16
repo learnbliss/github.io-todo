@@ -7,7 +7,7 @@ import styles from './Header.module.scss'
 const Header = ({numTodo, currentList}) => {
     return (
         <div>
-            <span>You have <b>{numTodo}</b> Todos in <b className={styles.underline}>"{currentList}"</b> list</span>
+            <span>You have <b>{numTodo}</b> Todos in <span className={styles.header}>"{currentList}"</span> list</span>
         </div>
     );
 };
