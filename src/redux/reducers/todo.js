@@ -75,7 +75,7 @@ export default (state = initialState, action) => {
         case LOAD_TODOS_FROM_LOCALSTORAGE: {
             return {
                 ...state,
-                todoList: payload.localStorageTodoList,
+                todoList: payload.reformatTodoList,
                 currentList: payload.localStorageCurrentList,
             }
         }

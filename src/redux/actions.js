@@ -61,8 +61,15 @@ export const loadTodosFromLocalStorage = () => {
     return (dispatch) => {
         if (localStorage.getItem('todoList')) {
             const localStorageTodoList = JSON.parse(localStorage.getItem('todoList'));
-            const localStorageCurrentList = JSON.parse(localStorage.getItem('currentList'));
-            dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {localStorageTodoList, localStorageCurrentList}})
+            let localStorageCurrentList = JSON.parse(localStorage.getItem('currentList'));
+            let reformatTodoList;
+            if (Array.isArray(localStorageTodoList)) { // для совместимости с версией без поддержки списков
+                reformatTodoList = {Default: localStorageTodoList};
+                localStorageCurrentList = 'Default';
+            } else {
+                reformatTodoList = localStorageTodoList
+            }
+            dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {reformatTodoList, localStorageCurrentList}})
         }
     };
 };
