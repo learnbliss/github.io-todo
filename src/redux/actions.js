@@ -17,7 +17,13 @@ import {
     SHOULD_BE_ONE_LIST, RENAME_LIST
 } from './constants';
 import {v4 as uuidv4} from 'uuid';
-import {currentListSelector, lastDeletedSelector, todoListNameSelector, todoListToArrSelector} from './selectors';
+import {
+    currentListSelector,
+    lastDeletedSelector,
+    newListNameSelector,
+    todoListNameSelector,
+    todoListToArrSelector
+} from './selectors';
 import {upperCase} from './utils';
 
 export const confirmDelete = (id) => ({
@@ -99,12 +105,24 @@ export const setCurrentList = (currentList) => ({
     payload: {currentList}
 });
 
-export const addNewListConfirm = () => ({type: ADD_NEW_LIST + CONFIRM});
+export const addNewListConfirm = (listName) => ({type: ADD_NEW_LIST + CONFIRM, payload: {listName}});
 
 export const addNewListSuccess = (nameList) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const state = getState();
+        const newListName = newListNameSelector(state);
         const upperText = upperCase(nameList);
+        if (newListName) {
+            return dispatch({type: RENAME_LIST + SUCCESS, payload: {upperText}})
+        }
         dispatch({type: ADD_NEW_LIST + SUCCESS, payload: {upperText}})
+    };
+};
+
+export const renameListConfirm = (currentList) => {
+    return (dispatch, getState) => {
+        // const upperText = upperCase(currentList);
+        dispatch({type: RENAME_LIST + CONFIRM, payload: {currentList}})
     };
 };
 
@@ -149,5 +167,8 @@ export const setShouldBeOne = () => {
     };
 };
 
-export const renameList = (index, newListName) => ({type: RENAME_LIST, payload: {index, newListName}});
+// export const renameList = (currentList) => {
+//     console.log('action currentList: ', currentList);
+//     return {type: RENAME_LIST + CONFIRM, payload: {currentList}}
+// };
 

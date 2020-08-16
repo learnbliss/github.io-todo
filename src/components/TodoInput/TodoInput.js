@@ -6,6 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import cn from 'classnames'
 
 const TodoInput = ({fnApply, initialData, fnQuery, placeholder, maxLength = 150, onBlur = false, editMode = false}) => {
+    console.log('initialData: ', initialData);
     const [input, setInput] = useState('');
     useEffect(() => {
         if (initialData?.text) {

@@ -43,6 +43,7 @@ export const todoListNameSelector = createSelector(
 );
 
 export const newListNameSelector = (state) => state.todo.newListName;
+export const listEditSelector = (state) => state.todo.listEdit;
 export const deleteListSelector = (state) => state.todo.deleteList;
 export const shouldBeOneListSelector = (state) => state.todo.shouldBeOneList;
 

@@ -10,3 +10,7 @@ export const upperCase = (text) => {
     })
 };
 
+export const renameKeyInObj = (oldProp, newProp, {[oldProp]:old, ...others}) => ({
+    [newProp]: old,
+    ...others
+});

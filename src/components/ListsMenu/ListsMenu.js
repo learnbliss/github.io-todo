@@ -5,12 +5,12 @@ import {
     addNewListConfirm, addNewListSuccess,
     clearList,
     deleteCurrentList,
-    deleteCurrentListConfirm, renameList,
+    deleteCurrentListConfirm, renameListConfirm,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
 import {
     confirmClearListSelector,
-    currentListSelector, deleteListSelector, newListNameSelector,
+    currentListSelector, deleteListSelector, listEditSelector, newListNameSelector,
 } from '../../redux/selectors';
 import ConfirmAction from '../ConfirmAction';
 import ButtonPrimary from '../ButtonPrimary';
@@ -20,17 +20,17 @@ import CreateIcon from '@material-ui/icons/Create';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import TodoInput from '../TodoInput';
 
-const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList, renameList, newListName, addNewListConfirm, addNewListSuccess}) => {
+const ListsMenu = ({currentList, clearList, deleteCurrentListConfirm, confirmClearList, deleteList, deleteCurrentList, newListName, addNewListConfirm, addNewListSuccess, listEdit, renameListConfirm}) => {
     return (
         <div className={styles.head}>
             <ListHead/>
             <div className="bold">Select list:</div>
-            {newListName
-                ? <TodoInput fnQuery={addNewListConfirm} fnApply={addNewListSuccess} maxLength={35} editMode={true} onBlur={true}/>
+            {listEdit
+                ? <TodoInput fnQuery={addNewListConfirm} fnApply={addNewListSuccess} maxLength={35} editMode={true} onBlur={true} initialData={newListName}/>
                 : <div className={styles.lists}>
                     <SelectList/>
                     <div className={styles.buttons}>
-                        <CreateIcon onClick={() => renameList(currentList)} titleAccess="Rename list"/>
+                        <CreateIcon onClick={() => renameListConfirm(currentList)} titleAccess="Rename list"/>
                         <ClearAllIcon onClick={() => clearList()} titleAccess="Clear list"/>
                         {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={renameList} name="Rename"/>*/}
                         {/*<ButtonPrimary style={{fontSize: '.9rem'}} buttonClick={clearList} name="Clear"/>*/}
@@ -67,11 +67,12 @@ export default connect(state => ({
     confirmClearList: confirmClearListSelector(state),
     deleteList: deleteListSelector(state),
     newListName: newListNameSelector(state),
+    listEdit: listEditSelector(state),
 }), {
     clearList,
     deleteCurrentListConfirm,
     deleteCurrentList,
-    renameList,
     addNewListConfirm,
     addNewListSuccess,
+    renameListConfirm,
 })(ListsMenu);

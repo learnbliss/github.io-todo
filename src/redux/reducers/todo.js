@@ -8,7 +8,7 @@ import {
     LOAD_TODOS_FROM_LOCALSTORAGE, REVERT_DELETED,
     SET_CHECKED, SET_CURRENT_LIST, SUCCESS, SHOULD_BE_ONE_LIST, RENAME_LIST
 } from '../constants';
-import {deleteKeyInObj} from '../utils';
+import {deleteKeyInObj, renameKeyInObj} from '../utils';
 
 const initialState = {
     todoList: {
@@ -19,7 +19,8 @@ const initialState = {
     lastDeleted: null,
     confirmClearList: false,
     currentList: 'Default',
-    newListName: false,
+    listEdit: false,
+    newListName: '',
     deleteList: '',
     shouldBeOneList: false,
 };
@@ -130,7 +131,8 @@ export default (state = initialState, action) => {
         case ADD_NEW_LIST + CONFIRM:
             return {
                 ...state,
-                newListName: !state.newListName,
+                listEdit: !state.listEdit,
+                newListName: payload.renameListName || '',
             };
         case ADD_NEW_LIST + SUCCESS:
             return {
@@ -139,8 +141,23 @@ export default (state = initialState, action) => {
                     ...state.todoList,
                     [payload.upperText]: [],
                 },
-                newListName: false,
+                listEdit: false,
+                newListName: '',
                 currentList: payload.upperText,
+            };
+        case RENAME_LIST + CONFIRM:
+            return {
+                ...state,
+                listEdit: true,
+                newListName: payload.currentList,
+            };
+        case RENAME_LIST + SUCCESS:
+            return {
+                ...state,
+                todoList: renameKeyInObj(state.newListName, payload.upperText, state.todoList),
+                listEdit: false,
+                currentList: payload.upperText,
+                newListName: '',
             };
         case DELETE_CURRENT_LIST + CONFIRM:
             return {
@@ -159,15 +176,6 @@ export default (state = initialState, action) => {
                 ...state,
                 deleteList: '',
                 shouldBeOneList: !state.shouldBeOneList,
-            };
-        case RENAME_LIST:
-            return {
-                ...state,
-                todoList: {
-                    ...state.todoList,
-                    [payload.newListName]: Object.keys(state.todoList)
-                },
-                newListName: true,
             };
         default:
             return state
