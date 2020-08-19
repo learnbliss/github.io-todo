@@ -4,6 +4,7 @@ import styles from './SelectList.module.scss'
 import {connect} from 'react-redux';
 import {currentListSelector, todoListToArrSelector} from '../../redux/selectors';
 import {setCurrentList} from '../../redux/actions';
+import Option from '../Option';
 
 const SelectList = ({currentList, setCurrentList, todoListArr}) => {
     const handleChangeList = (e) => {
@@ -15,7 +16,7 @@ const SelectList = ({currentList, setCurrentList, todoListArr}) => {
                     onChange={(e) => handleChangeList(e)}
                     value={currentList}>
                 {todoListArr.map((list, i) => (
-                    <option key={i} value={list}>{list}</option>
+                    <Option key={i} list={list}/>
                 ))}
             </select>
         </div>
@@ -28,9 +29,13 @@ SelectList.propTypes = {
     todoListArr: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default connect(state => ({
+export default connect((state) => ({
     currentList: currentListSelector(state),
     todoListArr: todoListToArrSelector(state),
 }), {
     setCurrentList,
 })(SelectList);
+
+
+
+

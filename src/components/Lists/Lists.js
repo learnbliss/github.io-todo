@@ -6,10 +6,15 @@ import SelectList from '../SelectList/SelectList';
 import CreateIcon from '@material-ui/icons/Create';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import {connect} from 'react-redux';
-import {currentListSelector, listEditSelector, newListNameSelector} from '../../redux/selectors';
+import {
+    currentListSelector,
+    listEditSelector,
+    newListNameSelector,
+    todoListLengthSelector,
+} from '../../redux/selectors';
 import {addNewListConfirm, addNewListSuccess, clearList, renameListConfirm} from '../../redux/actions';
 
-const Lists = ({listEdit, addNewListConfirm, addNewListSuccess, newListName, renameListConfirm, currentList, clearList}) => {
+const Lists = ({listEdit, addNewListConfirm, addNewListSuccess, newListName, renameListConfirm, currentList, clearList, todoListLength}) => {
     return (
         <>
             <div className="bold">Select list:</div>
@@ -24,7 +29,10 @@ const Lists = ({listEdit, addNewListConfirm, addNewListSuccess, newListName, ren
                     <SelectList/>
                     <div className={styles.buttons}>
                         <CreateIcon onClick={() => renameListConfirm(currentList)} titleAccess="Rename list"/>
-                        <ClearAllIcon onClick={() => clearList()} titleAccess="Clear list"/>
+                        {todoListLength > 0 ?
+                            <ClearAllIcon onClick={() => clearList()} titleAccess="Clear list"/>
+                            : <ClearAllIcon color='disabled'/>
+                        }
                     </div>
                 </div>
             }
@@ -45,6 +53,7 @@ export default connect(state => ({
     listEdit: listEditSelector(state),
     newListName: newListNameSelector(state),
     currentList: currentListSelector(state),
+    todoListLength: todoListLengthSelector(state),
 }), {
     addNewListConfirm,
     addNewListSuccess,

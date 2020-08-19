@@ -47,3 +47,21 @@ export const listEditSelector = (state) => state.todo.listEdit;
 export const deleteListSelector = (state) => state.todo.deleteList;
 export const shouldBeOneListSelector = (state) => state.todo.shouldBeOneList;
 
+export const numberTasksSelector = createSelector(
+    todoListSelector,
+    (_, {list}) => list,
+    (todoList, list) => {
+        return todoList[list].length
+    }
+);
+
+export const numberNotCheckTasksSelector = createSelector(
+    todoListSelector,
+    (_, {list}) => list,
+    (todoList, list) => {
+        return todoList[list].filter(item => {
+                return !item.checked
+            }
+        ).length
+    }
+);
