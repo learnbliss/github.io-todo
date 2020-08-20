@@ -1,0 +1,14 @@
+.dark {
+  background-color: #282C34;
+  color: white;
+  button {
+    background-color: #67DBF9;
+  }
+  input, select {
+    background-color: #465052;
+    color: white;
+  }
+  input::placeholder {
+    color: #8e939b;
+  }
+}

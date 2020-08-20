@@ -65,3 +65,5 @@ export const numberNotCheckTasksSelector = createSelector(
         ).length
     }
 );
+
+export const darkThemeSelector = (state) => state.theme.darkTheme;

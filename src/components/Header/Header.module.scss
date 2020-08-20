@@ -1,6 +1,16 @@
+.root {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: .5rem;
+  align-items: center;
+}
+
 .header {
   border-bottom: 1px solid black;
-  color: black;
   font-weight: bold;
   word-break: break-word;
+}
+
+.switchWrapper {
+  align-self: start;
 }

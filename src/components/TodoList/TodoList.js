@@ -3,7 +3,7 @@ import styles from './TodoList.module.scss'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
-    currentListSelector,
+    currentListSelector, darkThemeSelector,
     lastDeletedSelector,
     shouldBeOneListSelector,
     todoListSelector
@@ -19,19 +19,21 @@ import ListsMenu from '../ListsMenu';
 import LayoutList from '../LayoutList';
 import PopUp from '../PopUp';
 import FieldNewTask from '../FieldNewTask';
+import cn from 'classnames';
+import '../../darkTheme.scss'
 // import './todoList.css';
 
-const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted, shouldBeOneList, setShouldBeOne}) => {
+const TodoList = ({todoList, currentList, loadTodosFromLocalStorage, addTodosInLocalStorage, lastDeleted, revertDeleted, shouldBeOneList, setShouldBeOne, darkTheme}) => {
     useEffect(() => {
         loadTodosFromLocalStorage();
     }, []); //eslint-disable-line
 
     useEffect(() => {
-        addTodosInLocalStorage(todoList, currentList);
-    }, [addTodosInLocalStorage, todoList, currentList]);
+        addTodosInLocalStorage(todoList, currentList, darkTheme);
+    }, [addTodosInLocalStorage, todoList, currentList, darkTheme]);
 
     return (
-        <div className={styles.root}>
+        <div className={cn(styles.root, {'dark': darkTheme})}>
             <Header/>
             <ListsMenu/>
             <LayoutList/>
@@ -60,6 +62,7 @@ TodoList.propTypes = {
     revertDeleted: PropTypes.func,
     shouldBeOneList: PropTypes.bool,
     setShouldBeOne: PropTypes.func,
+    darkTheme: PropTypes.bool,
 };
 
 export default connect((state) => ({
@@ -67,6 +70,7 @@ export default connect((state) => ({
     currentList: currentListSelector(state),
     lastDeleted: lastDeletedSelector(state),
     shouldBeOneList: shouldBeOneListSelector(state),
+    darkTheme: darkThemeSelector(state),
 }), {
     loadTodosFromLocalStorage,
     addTodosInLocalStorage,

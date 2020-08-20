@@ -14,7 +14,7 @@ import {
     SET_CURRENT_LIST,
     ADD_NEW_LIST,
     DELETE_CURRENT_LIST,
-    SHOULD_BE_ONE_LIST, RENAME_LIST
+    SHOULD_BE_ONE_LIST, RENAME_LIST, CHANGE_THEME
 } from './constants';
 import {v4 as uuidv4} from 'uuid';
 import {
@@ -63,21 +63,28 @@ export const loadTodosFromLocalStorage = () => {
             const localStorageTodoList = JSON.parse(localStorage.getItem('todoList'));
             let localStorageCurrentList = JSON.parse(localStorage.getItem('currentList'));
             let reformatTodoList;
+            let localStorageDarkTheme;
             if (Array.isArray(localStorageTodoList)) { // для совместимости с версией без поддержки списков
                 reformatTodoList = {Default: localStorageTodoList};
                 localStorageCurrentList = 'Default';
             } else {
                 reformatTodoList = localStorageTodoList
             }
-            dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {reformatTodoList, localStorageCurrentList}})
+            if (!localStorage.getItem('darkTheme')) {
+                localStorageDarkTheme = false;
+            } else {
+                localStorageDarkTheme = JSON.parse(localStorage.getItem('darkTheme'));
+            }
+            dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {reformatTodoList, localStorageCurrentList, localStorageDarkTheme}})
         }
     };
 };
 
-export const addTodosInLocalStorage = (todoList, currentList) => {
+export const addTodosInLocalStorage = (todoList, currentList, darkTheme) => {
     return () => {
         localStorage.setItem('todoList', JSON.stringify(todoList));
         localStorage.setItem('currentList', JSON.stringify(currentList));
+        localStorage.setItem('darkTheme', JSON.stringify(darkTheme));
     };
 };
 
@@ -171,3 +178,5 @@ export const setShouldBeOne = () => {
         dispatch({type: SHOULD_BE_ONE_LIST})
     };
 };
+
+export const changeTheme = () => ({type: CHANGE_THEME});

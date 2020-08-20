@@ -5,7 +5,11 @@ import {numberNotCheckTasksSelector, numberTasksSelector} from '../../redux/sele
 
 const Option = ({list, numberNotCheckTasks, numberTasks}) => {
     return (
-        <option value={list}>{list} ({numberNotCheckTasks} out of {numberTasks})</option>
+        <>
+            {numberNotCheckTasks === 0
+                ? <option value={list}>{list} (all {numberTasks} done)</option>
+                : <option value={list}>{list} ({numberNotCheckTasks} out of {numberTasks})</option>}
+        </>
     );
 };
 
