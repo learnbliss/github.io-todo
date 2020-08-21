@@ -77,5 +77,3 @@ export default connect((state) => ({
     revertDeleted,
     setShouldBeOne,
 })(TodoList);
-
-// todo добавить темную тему

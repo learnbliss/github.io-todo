@@ -1,3 +1,5 @@
+@import "src/animation";
+
 .lists {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -13,14 +15,5 @@
 
   svg {
     cursor: pointer;
-  }
-}
-
-@keyframes rootScale {
-  0% {
-    transform: rotateX(90deg);
-  }
-  100% {
-    transform: rotateX(0deg);
   }
 }

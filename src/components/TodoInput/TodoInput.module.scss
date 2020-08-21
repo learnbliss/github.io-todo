@@ -1,3 +1,5 @@
+@import "src/animation";
+
 .todoInput {
   display: flex;
   justify-content: space-between;
@@ -8,8 +10,6 @@
     cursor: pointer;
   }
 }
-
-//todo дублирование анимации
 
 .input {
   font-size: 1rem;
@@ -39,26 +39,5 @@
   color: transparent;
   transform: translateX(1rem);
   outline: black;
-}
-
-@keyframes edit {
-  0% {
-    box-shadow: 0 0 5px 0 rgba(38,145,212, 1);
-  }
-  50% {
-    box-shadow: unset;
-  }
-  100% {
-    box-shadow: 0 0 5px 0 rgba(38,145,212, 1);
-  }
-}
-
-@keyframes rootScale {
-  0% {
-    transform: rotateX(90deg);
-  }
-  100% {
-    transform: rotateX(0deg);
-  }
 }
 
