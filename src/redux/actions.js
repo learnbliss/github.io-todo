@@ -33,7 +33,10 @@ export const confirmDelete = (id) => ({
 let timer;
 export const deleteTodo = (id) => {
     return (dispatch) => {
-        const handler = () => (dispatch({type: CLEAR_LAST_DELETED}));
+        const handler = () => {
+            dispatch({type: CLEAR_LAST_DELETED});
+            clearTimeout(timer);
+        };
         dispatch({type: DELETE_TODO, payload: {id}});
         clearTimeout(timer);
         timer = setTimeout(handler, 3000)
@@ -75,7 +78,10 @@ export const loadTodosFromLocalStorage = () => {
             } else {
                 localStorageDarkTheme = JSON.parse(localStorage.getItem('darkTheme'));
             }
-            dispatch({type: LOAD_TODOS_FROM_LOCALSTORAGE, payload: {reformatTodoList, localStorageCurrentList, localStorageDarkTheme}})
+            dispatch({
+                type: LOAD_TODOS_FROM_LOCALSTORAGE,
+                payload: {reformatTodoList, localStorageCurrentList, localStorageDarkTheme}
+            })
         }
     };
 };
@@ -144,7 +150,10 @@ export const deleteCurrentListConfirm = () => {
         const todoListArr = todoListToArrSelector(state);
         if (todoListArr.length === 1) {
             dispatch({type: SHOULD_BE_ONE_LIST});
-            timer = setTimeout(() => (dispatch({type: SHOULD_BE_ONE_LIST})), 3000)
+            timer = setTimeout(() => {
+                dispatch({type: SHOULD_BE_ONE_LIST});
+                clearTimeout(timer);
+            }, 3000)
         } else {
             dispatch({type: DELETE_CURRENT_LIST + CONFIRM})
         }
